@@ -1,0 +1,5 @@
+fix en passant bug
+fix segfault bug
+fix bishop cant capture pawn that is checking king bug
+fix king capture pawn checking it bug
+handlecheckmate
