@@ -1,3 +1,1 @@
-fix segfault bug
-fix bishop cant capture pawn that is checking king bug
 handlecheckmate

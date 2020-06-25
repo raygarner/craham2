@@ -166,6 +166,7 @@ validCastle(int m, int n, int movem, int moven, Board board)
 {
     int side, start, end, i;
 
+
     if (!(board.allPieces[m][n].mc == 0 && movem == 0))
         return 0;
 
@@ -203,6 +204,7 @@ validCastle(int m, int n, int movem, int moven, Board board)
             return 0;
     }
 
+    
     return 1;
 }
 
@@ -311,7 +313,8 @@ validMove(int m, int n, int movem, int moven, Board board)
     }
 }
 
-/* returns whether a piece is threatened */
+/* returns whether a piece is threatened 
+ * only used to check for check and castle validation */
 int
 isThreatened(int m, int n, Board board)
 {
@@ -327,7 +330,8 @@ isThreatened(int m, int n, Board board)
                 return 0;
 
             if (board.allPieces[searchm][searchn].typeVal != EMPTY && \
-            board.allPieces[searchm][searchn].colour != colour) {
+            board.allPieces[searchm][searchn].colour != colour
+            && board.allPieces[searchm][searchn].typeVal != KING) {
                 count++;
                 movem = m - searchm;
                 moven = n - searchn;

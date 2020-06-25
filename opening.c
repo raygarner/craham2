@@ -16,6 +16,7 @@ int main(int argc, char **argv)
     board = addAllPieces(board);
 
     
+    /*
     while (1) {
         printBoard(board.allPieces);
         
@@ -30,9 +31,9 @@ int main(int argc, char **argv)
 
         i = 0;
     }
+    */
     
 
-    /*
     while (1) {
         printBoard(board.allPieces);
         printf("eval: %d\n", totalVal(board));
@@ -50,7 +51,6 @@ int main(int argc, char **argv)
             bestMove.moven, board);
 
     }
-    */
 
     return 0;
 }

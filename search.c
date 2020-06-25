@@ -7,7 +7,7 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
     Action action;
     Action legalMoves[MOVES];
     int index;
-
+    
 
     if (depth == 0) {
         /*
@@ -26,15 +26,15 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 
     index = addAllLegalMoves(colour,board,legalMoves);
 
+
+
     if (index == 0) {
-        //printBoard(board.allPieces);
         if (colour) {
             action.eval = -1000000;
-            //printf("white in checkmate\n");
         } else {
             action.eval = 1000000;
-            //printf("black in checkmate\n");
         }
+    
 
         return action;
 
@@ -42,6 +42,7 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 
     legalMoves[index] = LASTACTION;
     addEvals(ab,depth,colour,board,legalMoves);
+
 
     return strongestMoveFromList(colour,legalMoves);
 
@@ -157,7 +158,6 @@ int
 addAllLegalMoves(int colour, Board board, Action *legalMoves)
 {
     int m, n, index = 0, count = 0;
-
     for (m = 0; m < SIDE; m++ ) {
         for (n = 0; n < SIDE; n++) {
             if (board.allPieces[m][n].colour == colour) {
@@ -435,7 +435,6 @@ legalQueenMoves(int m, int n, Board board, Action *legalMoves, int index)
 int
 legalKingMoves(int m, int n, Board board, Action *legalMoves, int index)
 {
-
     int i;
 
     index = kingMoveLegality(m,n,1,1,board,legalMoves,index);
@@ -446,6 +445,7 @@ legalKingMoves(int m, int n, Board board, Action *legalMoves, int index)
     index = kingMoveLegality(m,n,-1,1,board,legalMoves,index);
     index = kingMoveLegality(m,n,0,-1,board,legalMoves,index);
     index = kingMoveLegality(m,n,-1,0,board,legalMoves,index);
+
 
     for (i = -2; i <= 2; i += 4) {
         if (validCastle(m,n,0,i,board)) {

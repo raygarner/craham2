@@ -31,37 +31,37 @@ char getPieceIcon(int typeVal, int colour)
     switch(typeVal) {
     case KING :
         if (colour)
-            return '0';
+            return 'K';
         else
             return 'k';
 
     case QUEEN :
         if (colour)
-            return '9';
+            return 'Q';
         else
             return 'q';
 
     case ROOK :
         if (colour)
-            return '5';
+            return 'R';
         else
             return 'r';
 
     case BISHOP :
         if (colour)
-            return '4';
+            return 'B';
         else
             return 'b';
 
     case KNIGHT :
         if (colour)
-            return '3';
+            return 'N';
         else
             return 'n';
 
     case PAWN :
         if (colour)
-            return '1';
+            return 'P';
         else
             return 'p';
 
