@@ -365,6 +365,8 @@ executeMove(int m, int n, int movem, int moven, Board board)
     if (board.allPieces[m][n].typeVal == PAWN) {
         if (movem == 2 * DIRECTION(colour)) {
             board.allPieces[m][n].mc += 2;
+        } else {
+            board.allPieces[m][n].mc++;
         }
 
         if (m + movem == HOMEROW(!colour)) {
@@ -401,7 +403,7 @@ executeMove(int m, int n, int movem, int moven, Board board)
 int
 resetEnemyPawns(int colour, Piece allPieces[8][8])
 {
-    int m, n, count;
+    int m, n, count = 0;
 
     for (m = 0; m < SIDE; m++) {
         for (n = 0; n < SIDE; n++) {
