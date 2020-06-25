@@ -3,7 +3,7 @@ CC=gcc
 EXES=opening selfplay userselfplay
 SRC=util.c search.c eval.c ui.c init.c
 
-all: opening selfplay userselfplay
+all: clean opening selfplay userselfplay
 
 opening: $(SRC) opening.c
 	$(CC) $(FLAGS) $? -o opening

@@ -20,9 +20,11 @@ int main(int argc, char **argv)
         printBoard(board.allPieces);
         
         board = movePrompt(board);
-        index = addAllLegalMoves(WHITE, board, legalMoves);
+        index = addAllLegalMoves(BLACK, board, legalMoves);
         legalMoves[index] = LASTACTION;
 
+
+        printf("LEGAL MOVES:\n");
         while (!isLastAction(legalMoves[i])) {
             printf("%d %d\t %d %d\n", legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, legalMoves[i].moven);
             i++;

@@ -157,7 +157,7 @@ kingsTooClose(int m, int n, int movem, int moven, Board board)
     diffm = (m+movem) - enemym;
     diffn = (n+moven) - enemyn;
 
-    return diffm <= 1 && diffn <= 1;
+    return abs(diffm) <= 1 && abs(diffn) <= 1;
 }
 
 /* returns whether a move is a valid castle */
@@ -335,6 +335,7 @@ isThreatened(int m, int n, Board board)
                 count++;
                 movem = m - searchm;
                 moven = n - searchn;
+
 
                 if (validMove(searchm, searchn, movem, moven, board)) {
                     return 1;
