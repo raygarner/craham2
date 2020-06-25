@@ -78,9 +78,9 @@ char getPieceIcon(int typeVal, int colour)
 /* prompts the user for a move and makes it if its valid */
 Board movePrompt(Board board)
 {
-    int m, n, movem, moven;
-    Piece *toMove;
+    int m = -1, n = -1, movem = 0, moven = 0;
 
+    /*
     printf("Enter the move you wish to make: ");
     scanf("%d %d %d %d", &m, &n, &movem, &moven);
 
@@ -89,13 +89,6 @@ Board movePrompt(Board board)
         return board;
     }
 
-    /*
-    if (isValidMove(*toMove, move, allPieces) && \
-    !willBeInCheck(*toMove, move, allPieces))
-        executeMove(*toMove, move, allPieces);
-    else
-        printf("INVALID MOVE\n");
-    */
 
     if (!validMove(m, n, movem, moven, board)) {
         printf("INVALID MOVE\n");
@@ -104,6 +97,16 @@ Board movePrompt(Board board)
     } else {
         board = executeMove(m, n, movem, moven, board);
     }
+    */
 
-    return board;
+    while (!validMove(m, n, movem, moven, board) || \
+    willBeInCheck(m, n, movem, moven, board) || \
+    board.allPieces[m][n].typeVal == EMPTY) {
+        printf("Enter the move you wish to make: ");
+        scanf("%d %d %d %d", &m, &n, &movem, &moven);
+    }
+
+    return executeMove(m, n, movem, moven, board);
+
+    //return board;
 }
