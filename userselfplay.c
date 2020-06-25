@@ -16,7 +16,6 @@ int main(int argc, char **argv)
     board = addAllPieces(board);
 
     
-    /*
     while (1) {
         printBoard(board.allPieces);
         
@@ -31,26 +30,6 @@ int main(int argc, char **argv)
 
         i = 0;
     }
-    */
-    
-
-    while (1) {
-        printBoard(board.allPieces);
-        printf("eval: %d\n", totalVal(board));
-
-        board = movePrompt(board);
-
-        printBoard(board.allPieces);
-
-        start = clock();
-        bestMove = findMostEpicMove(ab, 6, BLACK, board);
-        end = clock();
-        printf("%ds\n", (end - start) / CLOCKS_PER_SEC);
-        printf("pred eval: %d\n", bestMove.eval);
-        board = executeMove(bestMove.m, bestMove.n, bestMove.movem, \
-            bestMove.moven, board);
-
-    }
-
-    return 0;
+  
+  return 0;
 }
