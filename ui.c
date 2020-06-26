@@ -99,7 +99,8 @@ Board movePrompt(Board board)
     }
     */
 
-    while (!validMove(m, n, movem, moven, board) || \
+    while (!isOnBoard(movem, moven) || \
+    !validMove(m, n, movem, moven, board) || \
     willBeInCheck(m, n, movem, moven, board) || \
     board.allPieces[m][n].typeVal == EMPTY) {
         printf("Enter the move you wish to make: ");
