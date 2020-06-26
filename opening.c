@@ -43,10 +43,9 @@ int main(int argc, char **argv)
         printBoard(board.allPieces);
 
         start = clock();
-        bestMove = findMostEpicMove(ab, 6, BLACK, board);
+        bestMove = findMostEpicMove(ab, DEPTH, BLACK, board);
         end = clock();
         printf("%ds\n", (end - start) / CLOCKS_PER_SEC);
-        printf("pred eval: %d\n", bestMove.eval);
         board = executeMove(bestMove.m, bestMove.n, bestMove.movem, \
             bestMove.moven, board);
 

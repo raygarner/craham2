@@ -19,7 +19,7 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
         action.move.m = 0;
         action.move.n = 0;
         */
-        action.eval = totalVal(board);
+        action.eval = totalMaterial(board.allPieces);
 
         return action;
     }

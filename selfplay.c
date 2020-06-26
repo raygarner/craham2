@@ -24,10 +24,9 @@ int main(int argc, char **argv)
         printf("material: %d\n", totalVal(board));
 
         start = clock();
-        bestMove = findMostEpicMove(ab, 6, colour, board);
+        bestMove = findMostEpicMove(ab, DEPTH, colour, board);
         end = clock();
         printf("%ds\n", (end - start) / CLOCKS_PER_SEC);
-        printf("predicted eval: %d\n", bestMove.eval);
         board = executeMove(bestMove.m, bestMove.n, bestMove.movem, \
             bestMove.moven, board);
 
