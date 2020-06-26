@@ -1,7 +1,7 @@
 #include "interface.h"
 
 /* finds the strongest move for a colour in a position */
-Action 
+Action
 findMostEpicMove(Pair ab, int depth, int colour, Board board)
 {
     Action action;
@@ -26,8 +26,6 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 
     index = addAllLegalMoves(colour,board,legalMoves);
 
-
-
     if (index == 0) {
         if (colour) {
             action.eval = -1000000;
@@ -45,7 +43,6 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 
 
     return strongestMoveFromList(colour,legalMoves);
-
 }
 
 /* adds evals for moves */
