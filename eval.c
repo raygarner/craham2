@@ -19,9 +19,10 @@ int totalMaterial(Piece allPieces[8][8])
         for (n = 0; n < SIDE; n++) {
             if (allPieces[m][n].colour) {
                 total += allPieces[m][n].typeVal;
-            } else if (!allPieces[m][n].colour) {
+            } else {
                 total -= allPieces[m][n].typeVal;
             }
+
         }
     }
 

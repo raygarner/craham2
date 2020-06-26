@@ -46,6 +46,7 @@ int main(int argc, char **argv)
         bestMove = findMostEpicMove(ab, DEPTH, BLACK, board);
         end = clock();
         printf("%ds\n", (end - start) / CLOCKS_PER_SEC);
+        printf("predicted eval: %d\n", bestMove.eval);
         board = executeMove(bestMove.m, bestMove.n, bestMove.movem, \
             bestMove.moven, board);
 

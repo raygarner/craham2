@@ -99,7 +99,7 @@ Board movePrompt(Board board)
     }
     */
 
-    while (!isOnBoard(movem, moven) || \
+    while (!isOnBoard(abs(movem), abs(moven)) || \
     !validMove(m, n, movem, moven, board) || \
     willBeInCheck(m, n, movem, moven, board) || \
     board.allPieces[m][n].typeVal == EMPTY) {

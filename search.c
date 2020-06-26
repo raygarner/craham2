@@ -6,8 +6,9 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 {
     Action action;
     Action legalMoves[MOVES];
-    int index;
+    int index = 0;
     
+    //printf("%d %d\n", ab.a, ab.b);
 
     if (depth == 0) {
         /*
@@ -29,6 +30,7 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 
 
     if (index == 0) {
+        //printBoard(board.allPieces);
         if (colour) {
             action.eval = -1000000;
         } else {
@@ -61,6 +63,7 @@ addEvals(Pair ab, int depth, int colour, Board board, Action *legalMoves)
             legalMoves[i].moven, board);
 
         eval = findMostEpicMove(ab, depth-1, !colour, newBoard).eval;
+       
         explore = dontExplore(ab, colour, eval);
 
 
@@ -74,6 +77,14 @@ addEvals(Pair ab, int depth, int colour, Board board, Action *legalMoves)
             ab = updateAB(ab,colour,eval);
             i++;
         }
+        
+
+        /*
+        legalMoves[i].eval = eval;
+        newBoard = board;
+        ab = updateAB(ab,colour,eval);
+        i++;
+        */
     }
 
     return legalMoves;
@@ -88,17 +99,19 @@ dontExplore(Pair ab, int colour, int eval)
     if (colour) {
         explore.b = ab.b;
 
-        if (eval >= ab.b)
+        if (eval >= ab.b) {
             explore.a = 1;
-        else
+        } else {
             explore.a = 0;
+        }
     } else {
         explore.b = ab.a;
 
-        if (eval <= ab.a)
+        if (eval <= ab.a) {
             explore.a = 1;
-        else
+        } else {
             explore.a = 0;
+        }
     }
 
     return explore;
@@ -110,11 +123,11 @@ updateAB(Pair ab, int colour, int eval)
 {
     if (colour) {
         if (eval > ab.a) {
-            ab.a= eval;
+            ab.a = eval;
         }
     } else {
         if (eval < ab.b) {
-            ab.b= eval;
+            ab.b = eval;
         }
     }
 
@@ -216,12 +229,14 @@ legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = dir;
         legalMoves[index].moven = 0;
+        legalMoves[index].eval = 0;
         index++;
 
         if (board.allPieces[m+dir*2][n].typeVal == EMPTY && \
         m == PAWNHOMEROW(board.allPieces[m][n].colour)) {
             legalMoves[index] = legalMoves[index-1];
             legalMoves[index].movem = dir * 2;
+            legalMoves[index].eval = 0;
             index++;
         }
     }
@@ -236,6 +251,7 @@ legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index)
                 legalMoves[index].n = n;
                 legalMoves[index].movem = dir;
                 legalMoves[index].moven = i;
+                legalMoves[index].eval = 0;
                 index++;
             }
             
@@ -247,6 +263,7 @@ legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index)
                 legalMoves[index].n = n;
                 legalMoves[index].movem = dir;
                 legalMoves[index].moven = i;
+                legalMoves[index].eval = 0;
                 index++;
             }
         }
@@ -290,6 +307,7 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
+        legalMoves[index].eval = 0;
         index++;
     }
 
@@ -340,6 +358,7 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
+        legalMoves[index].eval = 0;
         index++;
         movem = furtherFromZero(movem);
         moven = furtherFromZero(moven);
@@ -351,6 +370,7 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
+        legalMoves[index].eval = 0;
         index++;
     }
 
@@ -400,6 +420,7 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
+        legalMoves[index].eval = 0;
         index++;
 
         if (movem == 0) {
@@ -415,6 +436,7 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
+        legalMoves[index].eval = 0;
         index++;
     }
 
@@ -453,6 +475,7 @@ legalKingMoves(int m, int n, Board board, Action *legalMoves, int index)
             legalMoves[index].n = n;
             legalMoves[index].movem = 0;
             legalMoves[index].moven = i;
+            legalMoves[index].eval = 0;
             index++;
         }
 
@@ -473,6 +496,7 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
+        legalMoves[index].eval = 0;
         index++;
     }
 

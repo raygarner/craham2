@@ -10,11 +10,11 @@
 #define SIDE 8
 #define MOVES 256
 #define CAPTURED -1
-#define DEPTH 7
+#define DEPTH 6
 
 #define LAST_ACTION { .m = 0 , .n = 0, .movem = 0, .moven = 0, \
     .eval = 0 }
-#define EMPTY_SQUARE { .typeVal = 0, .colour = -1, .mc = -1 }
+#define EMPTY_SQUARE { .typeVal = 0, .colour = -1, .mc = -0 }
 
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
 #define MAX(A, B) ((A) > (B) ? (A) : (B))
