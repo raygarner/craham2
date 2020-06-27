@@ -140,7 +140,6 @@ validKingMove(int m, int n, int movem, int moven, Board board)
     if (!isValidTarget(m, n, movem, moven, board.allPieces))
         return 0;
 
-
     return !kingsTooClose(m,n,movem,moven,board);
 }
 
@@ -165,10 +164,13 @@ int
 validCastle(int m, int n, int movem, int moven, Board board)
 {
     int side, start, end, i;
-
+    
+    printf("start of valid castle %d %d\n", movem, moven);
 
     if (!(board.allPieces[m][n].mc == 0 && movem == 0))
         return 0;
+
+    printf("first test passed\n");
 
     if (moven == 2) {
         side = 1;
@@ -195,13 +197,19 @@ validCastle(int m, int n, int movem, int moven, Board board)
         end = 4;
     }
 
+    printf("valid rook\n");
+
     for (i = start; i <= end; i++) {
         if (board.allPieces[m][i].typeVal != KING \
-        && board.allPieces[m][i].typeVal != EMPTY)
+        && board.allPieces[m][i].typeVal != EMPTY) {
+            printf("square not empty %d\n", i);
             return 0;
+        }
 
-        if (isThreatened(m, i, board))
+        if (isThreatened(m, i, board, board.allPieces[m][n].colour)) {
+            printf("squares threatened %d\n", i);
             return 0;
+        }
     }
 
     
@@ -316,11 +324,11 @@ validMove(int m, int n, int movem, int moven, Board board)
 /* returns whether a piece is threatened 
  * only used to check for check and castle validation */
 int
-isThreatened(int m, int n, Board board)
+isThreatened(int m, int n, Board board, int colour)
 {
     int searchm, searchn;
     int movem, moven;
-    int colour = board.allPieces[m][n].colour;
+//    int colour = board.allPieces[m][n].colour;
     int count = 0;
 
     for (searchm = 0; searchm < SIDE; searchm++) {
@@ -352,7 +360,7 @@ isThreatened(int m, int n, Board board)
 int
 inCheck(int colour, Board board)
 {
-    return isThreatened(board.kingm[colour], board.kingn[colour], board);
+    return isThreatened(board.kingm[colour],board.kingn[colour],board,colour);
 }
 
 /* executes a move on the board and returns the new board

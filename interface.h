@@ -107,7 +107,7 @@ int validPawnMove(int m, int n, int movem, int moven, \
 int validEnPassant(int m, int n, int movem, int moven, \
     Piece allPieces[8][8]);
 int validMove(int m, int n, int movem, int moven, Board board);
-int isThreatened(int m, int n, Board board);
+int isThreatened(int m, int n, Board board, int colour);
 int inCheck(int colour, Board board);
 Board executeMove(int m, int n, int movem, int moven, Board board);
 int resetEnemyPawns(int colour, Piece allPieces[8][8]);
