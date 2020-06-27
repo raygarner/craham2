@@ -165,12 +165,10 @@ validCastle(int m, int n, int movem, int moven, Board board)
 {
     int side, start, end, i;
     
-    printf("start of valid castle %d %d\n", movem, moven);
 
     if (!(board.allPieces[m][n].mc == 0 && movem == 0))
         return 0;
 
-    printf("first test passed\n");
 
     if (moven == 2) {
         side = 1;
@@ -197,17 +195,14 @@ validCastle(int m, int n, int movem, int moven, Board board)
         end = 4;
     }
 
-    printf("valid rook\n");
 
     for (i = start; i <= end; i++) {
         if (board.allPieces[m][i].typeVal != KING \
         && board.allPieces[m][i].typeVal != EMPTY) {
-            printf("square not empty %d\n", i);
             return 0;
         }
 
         if (isThreatened(m, i, board, board.allPieces[m][n].colour)) {
-            printf("squares threatened %d\n", i);
             return 0;
         }
     }
