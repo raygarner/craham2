@@ -136,3 +136,11 @@ updateAB(Pair ab, int colour, int eval)
     return ab;
 }
 
+/* checks if an action is the last action marker */
+int
+isLastAction(Action action)
+{
+    return action.m == LASTACTION.m && action.n == LASTACTION.n && \
+    action.movem == LASTACTION.movem && action.moven == LASTACTION.moven && \
+    action.eval == LASTACTION.eval;
+}

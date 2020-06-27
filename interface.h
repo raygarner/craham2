@@ -69,12 +69,16 @@ extern const Action LASTACTION;
 extern const Piece EMPTYSQUARE;
 extern int HASHBOARD[8][8];
 
-/* init.c */
+/* board.c */
 Board addAllPieces(Board board);
 int addPawns(int row, int colour, Piece allPieces[8][8]);
 int addTwoPieces(int column, int typeVal, Piece allPieces[8][8]);
 int addEmptySquares(Piece allPieces[8][8]);
-int initHashBoard();
+Board executeMove(int m, int n, int movem, int moven, Board board);
+int resetEnemyPawns(int colour, Piece allPieces[8][8]);
+Board executeCastle(int m, int moven, Board board);
+int captureEnPassant(int m, int n, int movem, int moven, \
+    Piece allPieces[8][8]);
 
 /* ui.c */
 int printBoard(Piece allPieces[8][8]);
@@ -112,14 +116,7 @@ int validEnPassant(int m, int n, int movem, int moven, \
 int validMove(int m, int n, int movem, int moven, Board board);
 int isThreatened(int m, int n, Board board, int colour);
 int inCheck(int colour, Board board);
-Board executeMove(int m, int n, int movem, int moven, Board board);
-int resetEnemyPawns(int colour, Piece allPieces[8][8]);
-Board executeCastle(int m, int moven, Board board);
-int captureEnPassant(int m, int n, int movem, int moven, \
-    Piece allPieces[8][8]);
-int copyAllpieces(Piece a[8][8], Piece b[8][8]);
 int willBeInCheck(int m, int n, int movem, int moven, Board board);
-int isLastAction(Action action);
 
 /* eval.c */
 int totalMaterial(Piece allPieces[8][8]);
@@ -130,6 +127,7 @@ Action *addEvals(Pair ab, int depth, int colour, Board board, \
     Action *legalMoves);
 Pair dontExplore(Pair ab, int colour, int eval);
 Pair updateAB(Pair ab, int colour, int eval);
+int isLastAction(Action action);
 
 /* movegen.c */
 Action *sortMoves(int colour, Action *legalMoves);
@@ -150,5 +148,9 @@ int legalQueenMoves(int m, int n, Board board, Action *legalMoves, int index);
 int legalKingMoves(int m, int n, Board board, Action *legalMoves, int index);
 int kingMoveLegality(int m, int n, int movem, int moven, Board board, \
     Action *legalMoves, int index);
+
+/* hashing.c */
+int genHashCode(Piece allPieces[8][8]);
+int initHashBoard();
 
 #endif
