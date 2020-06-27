@@ -121,7 +121,7 @@ int willBeInCheck(int m, int n, int movem, int moven, Board board);
 int isLastAction(Action action);
 
 /* eval.c */
-int totalVal(Board board);
+//int totalVal(Board board);
 int totalMaterial(Piece allPieces[8][8]);
 
 /* search.c */
@@ -130,6 +130,8 @@ Action *addEvals(Pair ab, int depth, int colour, Board board, \
     Action *legalMoves);
 Pair dontExplore(Pair ab, int colour, int eval);
 Pair updateAB(Pair ab, int colour, int eval);
+
+/* movegen.c */
 Action *sortMoves(int colour, Action *legalMoves);
 Action strongestMoveFromList(int colour, Action *legalMoves);
 int addAllLegalMoves(int colour, Board board, Action *legalMoves);

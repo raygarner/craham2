@@ -33,13 +33,13 @@ int main(int argc, char **argv)
         i = 0;
 
         printBoard(board.allPieces);
-        printf("material: %d\n", totalVal(board));
+        printf("material: %d\n", totalMaterial(board.allPieces));
 
         start = clock();
         bestMove = findMostEpicMove(ab, DEPTH, colour, board);
         end = clock();
         printf("%ds\n", (end - start) / CLOCKS_PER_SEC);
-        printf("predicted eval: %d\n", bestMove.eval);
+        printf("predicted material: %d\n", bestMove.eval);
         board = executeMove(bestMove.m, bestMove.n, bestMove.movem, \
             bestMove.moven, board);
 
