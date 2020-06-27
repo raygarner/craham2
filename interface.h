@@ -70,6 +70,7 @@ Board addAllPieces(Board board);
 int addPawns(int row, int colour, Piece allPieces[8][8]);
 int addTwoPieces(int column, int typeVal, Piece allPieces[8][8]);
 int addEmptySquares(Piece allPieces[8][8]);
+int initHashBoard();
 
 /* ui.c */
 int printBoard(Piece allPieces[8][8]);
@@ -79,6 +80,7 @@ Board movePrompt(Board board);
 /* util.c */
 extern const Action LASTACTION;
 extern const Piece EMPTYSQUARE;
+extern int HASHBOARD[8][8];
 int furtherFromZero(int num);
 int closerToZero(int num);
 int isInBounds(int x);

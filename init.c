@@ -1,7 +1,8 @@
 #include "interface.h"
 
 /* adds pieces to a board */
-Board addAllPieces(Board board)
+Board 
+addAllPieces(Board board)
 {
     Piece piece;
 
@@ -29,7 +30,8 @@ Board addAllPieces(Board board)
 }
 
 /* adds a row of pawns to a board */
-int addPawns(int row, int colour, Piece allPieces[8][8])
+int 
+addPawns(int row, int colour, Piece allPieces[8][8])
 {
     int n;
 
@@ -43,7 +45,8 @@ int addPawns(int row, int colour, Piece allPieces[8][8])
 }
 
 /* adds a piece two both sides */
-int addTwoPieces(int column, int typeVal, Piece allPieces[8][8])
+int 
+addTwoPieces(int column, int typeVal, Piece allPieces[8][8])
 {
     Piece piece;
 
@@ -60,7 +63,8 @@ int addTwoPieces(int column, int typeVal, Piece allPieces[8][8])
 }
 
 /* adds the empty squares to the board */
-int addEmptySquares(Piece allPieces[8][8])
+int 
+addEmptySquares(Piece allPieces[8][8])
 {
     int m, n;
 
@@ -74,4 +78,20 @@ int addEmptySquares(Piece allPieces[8][8])
     }
 
     return m * n;
+}
+
+/* initialises the hashboard with random numbers */
+int 
+initHashBoard()
+{
+    int m, n;
+
+    srand((unsigned)time(NULL));
+
+    for (m = 0; m < SIDE; m++) {
+        for (n = 0; n < SIDE; n++) {
+            HASHBOARD[m][n] = rand();
+        }
+    }
+
 }
