@@ -128,6 +128,7 @@ Action *addEvals(Pair ab, int depth, int colour, Board board, \
     Action *legalMoves);
 Pair dontExplore(Pair ab, int colour, int eval);
 Pair updateAB(Pair ab, int colour, int eval);
+Action *sortMoves(int colour, Action *legalMoves);
 Action strongestMoveFromList(int colour, Action *legalMoves);
 int addAllLegalMoves(int colour, Board board, Action *legalMoves);
 int addLegalMoves(int m, int n, Board board, Action *legalMoves, int index);

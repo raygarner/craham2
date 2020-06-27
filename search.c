@@ -43,6 +43,8 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
     }
 
     legalMoves[index] = LASTACTION;
+    /* sortMoves(colour, legalMoves);*/
+
     addEvals(ab,depth,colour,board,legalMoves);
 
 
@@ -134,6 +136,33 @@ updateAB(Pair ab, int colour, int eval)
     return ab;
 }
 
+/* orders the moves by eval after one turn */
+Action *
+sortMoves(int colour, Action *legalMoves)
+{
+    Action tmp;
+    int i = 0;
+    int swapped = 1;
+
+    while (swapped) {
+        swapped = 0;
+        i = 0;
+
+        while (!isLastAction(legalMoves[i+1])) {
+            if (legalMoves[i].eval >  legalMoves[i+1].eval) {
+                tmp = legalMoves[i];
+                legalMoves[i] = legalMoves[i+1];
+                legalMoves[i+1] = tmp;
+                swapped = 1;
+            }
+
+            i++;
+        }
+    }
+
+    return legalMoves;
+}
+
 /* returns the action with the best eval */
 Action 
 strongestMoveFromList(int colour, Action *legalMoves)
@@ -218,9 +247,11 @@ addLegalMoves(int m, int n, Board board, Action *legalMoves, int index)
 int
 legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index)
 {
-    int dir = DIRECTION(board.allPieces[m][n].colour);
+    int colour = board.allPieces[m][n].colour;
+    int dir = DIRECTION(colour);
     int i;
     Piece piece;
+    Board newBoard;
     
     
     if (board.allPieces[m+dir][n].typeVal == EMPTY && \
@@ -229,14 +260,14 @@ legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = dir;
         legalMoves[index].moven = 0;
-        legalMoves[index].eval = 0;
+/*         legalMoves[index].eval = totalMaterial(board.allPieces); */
         index++;
 
         if (board.allPieces[m+dir*2][n].typeVal == EMPTY && \
         m == PAWNHOMEROW(board.allPieces[m][n].colour)) {
             legalMoves[index] = legalMoves[index-1];
             legalMoves[index].movem = dir * 2;
-            legalMoves[index].eval = 0;
+/*             legalMoves[index].eval = totalMaterial(board.allPieces); */
             index++;
         }
     }
@@ -251,19 +282,21 @@ legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index)
                 legalMoves[index].n = n;
                 legalMoves[index].movem = dir;
                 legalMoves[index].moven = i;
-                legalMoves[index].eval = 0;
+/*                 legalMoves[index].eval = \ */
+/*                     totalMaterial(executeMove(m,n,dir,i,board).allPieces); */
                 index++;
             }
             
             if (piece.typeVal == EMPTY && \
             board.allPieces[m][n+i].typeVal == PAWN && \
-            board.allPieces[m][n+i].colour != board.allPieces[m][n].colour \
+            board.allPieces[m][n+i].colour != colour \
             && board.allPieces[m][n+i].mc == 2) {
                 legalMoves[index].m = m;
                 legalMoves[index].n = n;
                 legalMoves[index].movem = dir;
                 legalMoves[index].moven = i;
-                legalMoves[index].eval = 0;
+/*                 legalMoves[index].eval = \ */
+/*                     totalMaterial(executeMove(m,n,dir,i,board).allPieces); */
                 index++;
             }
         }
@@ -307,7 +340,8 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
-        legalMoves[index].eval = 0;
+/*         legalMoves[index].eval = \ */
+/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
         index++;
     }
 
@@ -358,7 +392,8 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
-        legalMoves[index].eval = 0;
+/*         legalMoves[index].eval = \ */
+/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
         index++;
         movem = furtherFromZero(movem);
         moven = furtherFromZero(moven);
@@ -370,7 +405,8 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
-        legalMoves[index].eval = 0;
+/*         legalMoves[index].eval = \ */
+/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
         index++;
     }
 
@@ -420,7 +456,8 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
-        legalMoves[index].eval = 0;
+/*         legalMoves[index].eval = \ */
+/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
         index++;
 
         if (movem == 0) {
@@ -436,7 +473,8 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
-        legalMoves[index].eval = 0;
+/*         legalMoves[index].eval = \ */
+/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
         index++;
     }
 
@@ -475,7 +513,7 @@ legalKingMoves(int m, int n, Board board, Action *legalMoves, int index)
             legalMoves[index].n = n;
             legalMoves[index].movem = 0;
             legalMoves[index].moven = i;
-            legalMoves[index].eval = 0;
+/*             legalMoves[index].eval = totalMaterial(board.allPieces); */
             index++;
         }
 
@@ -496,7 +534,8 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
-        legalMoves[index].eval = 0;
+/*         legalMoves[index].eval = \ */
+/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
         index++;
     }
 
