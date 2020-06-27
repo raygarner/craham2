@@ -1,11 +1,5 @@
 #include "interface.h"
 
-/* consts */
-const Action LASTACTION = LAST_ACTION;
-const Piece EMPTYSQUARE = EMPTY_SQUARE;
-
-/* vars */
-int HASHBOARD[8][8];
 
 /* returns an int one further from zero than the int passed */
 int

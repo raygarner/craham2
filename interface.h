@@ -38,7 +38,6 @@ enum pieceType {
     EMPTY = 0
 };
 
-
 /* types */
 typedef struct Pair {
     int a;
@@ -65,6 +64,11 @@ typedef struct Board {
     int kingn[2];
 } Board;
 
+/* globals.c */
+extern const Action LASTACTION;
+extern const Piece EMPTYSQUARE;
+extern int HASHBOARD[8][8];
+
 /* init.c */
 Board addAllPieces(Board board);
 int addPawns(int row, int colour, Piece allPieces[8][8]);
@@ -77,10 +81,7 @@ int printBoard(Piece allPieces[8][8]);
 char getPieceIcon(int typeVal, int colour);
 Board movePrompt(Board board);
 
-/* util.c */
-extern const Action LASTACTION;
-extern const Piece EMPTYSQUARE;
-extern int HASHBOARD[8][8];
+/* rules.c */
 int furtherFromZero(int num);
 int closerToZero(int num);
 int isInBounds(int x);
@@ -121,7 +122,6 @@ int willBeInCheck(int m, int n, int movem, int moven, Board board);
 int isLastAction(Action action);
 
 /* eval.c */
-//int totalVal(Board board);
 int totalMaterial(Piece allPieces[8][8]);
 
 /* search.c */

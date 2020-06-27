@@ -1,7 +1,7 @@
 FLAGS=-O3
 CC=gcc
 EXES=opening selfplay userselfplay
-SRC=util.c search.c eval.c ui.c init.c movegen.c
+SRC=rules.c search.c eval.c ui.c init.c movegen.c globals.c
 
 all: clean opening selfplay userselfplay
 
