@@ -11,6 +11,7 @@
 #define MOVES 256
 #define CAPTURED -1
 #define DEPTH 6
+#define TABLE 999999
 
 #define LAST_ACTION { .m = 0 , .n = 0, .movem = 0, .moven = 0, \
     .eval = 0 }
@@ -66,6 +67,7 @@ typedef struct Board {
 
 typedef struct Position {
     Board board;
+    Action action;
     int colour;
     int depth;
 } Position;
@@ -158,6 +160,7 @@ int kingMoveLegality(int m, int n, int movem, int moven, Board board, \
     Action *legalMoves, int index);
 
 /* hashing.c */
+int addPosToTable(int colour, int depth, Board board, Action action);
 int genHashCode(Piece allPieces[8][8]);
 int initHashBoard();
 

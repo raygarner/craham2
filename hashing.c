@@ -1,5 +1,19 @@
 #include "interface.h"
 
+/* adds a position to the transtable */
+int
+addPosToTable(int colour, int depth, Board board, Action action)
+{
+    int index = genHashCode(board.allPieces);
+
+    transTable[index].board = board;
+    transTable[index].depth = depth;
+    transTable[index].colour = colour;
+    transTable[index].action = action;
+
+    return 0;
+}
+
 /* generates an index to use based off of the board layout */
 int
 genHashCode(Piece allPieces[8][8])
