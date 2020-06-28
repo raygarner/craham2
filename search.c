@@ -7,11 +7,17 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
     Action action;
     Action legalMoves[MOVES];
     int index = 0;
+    int hashcode;
     
     //printf("%d %d\n", ab.a, ab.b);
+
+    hashcode = genHashCode(board.allPieces); 
+    
+    if (positionMatch(colour, depth, board, hashcode)) {
+        return transTable[hashcode].action;
+    }
+
     index = addAllLegalMoves(colour,board,legalMoves);
-
-
 
     if (index == 0) {
         //printBoard(board.allPieces);
@@ -22,6 +28,7 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
         }
     
 
+        addPosToTable(hashcode, colour, depth, board, action);
         return action;
 
     }
@@ -37,6 +44,7 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
         action.move.n = 0;
         */
         action.eval = totalMaterial(board.allPieces);
+        addPosToTable(hashcode, colour, depth, board, action);
 
         return action;
     }
@@ -49,8 +57,7 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 
     action = strongestMoveFromList(colour, legalMoves);
 
-    index = genHashCode(board.allPieces);
-    addPosToTable(index, colour, depth, board, action);
+    addPosToTable(hashcode, colour, depth, board, action);
     return action;
 
 }
@@ -64,19 +71,12 @@ addEvals(Pair ab, int depth, int colour, Board board, Action *legalMoves)
     Pair explore;
     Action bestMove;
 
+
     while (!isLastAction(legalMoves[i])) {
 
-        index = genHashCode(board.allPieces); 
-
-        
-        if (positionMatch(colour, depth, board, index)) {
-            bestMove = transTable[index].action;
-        } else {
-            newBoard = executeMove(legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, \
-                legalMoves[i].moven, board);
-            bestMove = findMostEpicMove(ab, depth-1, !colour, newBoard);
-
-        }
+        newBoard = executeMove(legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, \
+            legalMoves[i].moven, board);
+        bestMove = findMostEpicMove(ab, depth-1, !colour, newBoard);
         
         explore = dontExplore(ab, colour, bestMove.eval);
 
