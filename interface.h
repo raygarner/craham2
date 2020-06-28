@@ -64,6 +64,12 @@ typedef struct Board {
     int kingn[2];
 } Board;
 
+typedef struct Position {
+    Board board;
+    int colour;
+    int depth;
+} Position;
+
 /* globals.c */
 extern const Action LASTACTION;
 extern const Piece EMPTYSQUARE;
