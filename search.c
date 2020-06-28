@@ -9,22 +9,6 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
     int index = 0;
     
     //printf("%d %d\n", ab.a, ab.b);
-
-    if (depth == 0) {
-        /*
-        action.piece.typeVal = KING;
-        action.piece.pos.m = 0;
-        action.piece.pos.n = 0;
-        action.piece.colour = colour;
-        action.piece.mc = 0;
-        action.move.m = 0;
-        action.move.n = 0;
-        */
-        action.eval = totalMaterial(board.allPieces);
-
-        return action;
-    }
-
     index = addAllLegalMoves(colour,board,legalMoves);
 
 
@@ -41,6 +25,22 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
         return action;
 
     }
+
+    if (depth == 0) {
+        /*
+        action.piece.typeVal = KING;
+        action.piece.pos.m = 0;
+        action.piece.pos.n = 0;
+        action.piece.colour = colour;
+        action.piece.mc = 0;
+        action.move.m = 0;
+        action.move.n = 0;
+        */
+        action.eval = totalMaterial(board.allPieces);
+
+        return action;
+    }
+
 
     legalMoves[index] = LASTACTION;
     /* sortMoves(colour, legalMoves);*/
