@@ -25,6 +25,7 @@ int main(int argc, char **argv)
         legalMoves[index] = LASTACTION;
 
 
+        /*
         printf("LEGAL MOVES:\n");
         while (!isLastAction(legalMoves[i])) {
             printf("%d %d\t %d %d\n", legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, legalMoves[i].moven);
@@ -32,6 +33,7 @@ int main(int argc, char **argv)
         }
 
         i = 0;
+        */
 
         printBoard(board.allPieces);
         printf("material: %d\n", totalMaterial(board.allPieces));
