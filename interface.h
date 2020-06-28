@@ -74,6 +74,8 @@ typedef struct Position {
 extern const Action LASTACTION;
 extern const Piece EMPTYSQUARE;
 extern int HASHBOARD[8][8];
+extern Position transTable[999999];
+extern int transTableOffset;
 
 /* board.c */
 Board addAllPieces(Board board);
