@@ -15,6 +15,7 @@ int main(int argc, char **argv)
 
     board = addAllPieces(board);
     initHashBoard();
+    initTransTable();
     
     /*
     while (1) {

@@ -47,8 +47,11 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 
     addEvals(ab,depth,colour,board,legalMoves);
 
+    action = strongestMoveFromList(colour, legalMoves);
 
-    return strongestMoveFromList(colour,legalMoves);
+    index = genHashCode(board.allPieces);
+    addPosToTable(index, colour, depth, board, action);
+    return action;
 
 }
 
@@ -57,16 +60,25 @@ Action *
 addEvals(Pair ab, int depth, int colour, Board board, Action *legalMoves)
 {
     Board newBoard; 
-    int eval, i = 0;
+    int index, i = 0;
     Pair explore;
+    Action bestMove;
 
     while (!isLastAction(legalMoves[i])) {
-        newBoard = executeMove(legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, \
-            legalMoves[i].moven, board);
 
-        eval = findMostEpicMove(ab, depth-1, !colour, newBoard).eval;
-       
-        explore = dontExplore(ab, colour, eval);
+        index = genHashCode(board.allPieces); 
+
+        
+        if (positionMatch(colour, depth, board, index)) {
+            bestMove = transTable[index].action;
+        } else {
+            newBoard = executeMove(legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, \
+                legalMoves[i].moven, board);
+            bestMove = findMostEpicMove(ab, depth-1, !colour, newBoard);
+
+        }
+        
+        explore = dontExplore(ab, colour, bestMove.eval);
 
 
         if (explore.a) {
@@ -74,9 +86,9 @@ addEvals(Pair ab, int depth, int colour, Board board, Action *legalMoves)
             legalMoves[i+1] = LASTACTION;
             return legalMoves;
         } else {
-            legalMoves[i].eval = eval;
+            legalMoves[i].eval = bestMove.eval;
             newBoard = board;
-            ab = updateAB(ab,colour,eval);
+            ab = updateAB(ab,colour,bestMove.eval);
             i++;
         }
         

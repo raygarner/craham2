@@ -160,8 +160,10 @@ int kingMoveLegality(int m, int n, int movem, int moven, Board board, \
     Action *legalMoves, int index);
 
 /* hashing.c */
+int initTransTable();
 int positionMatch(int colour, int depth, Board board, int index);
-int addPosToTable(int colour, int depth, Board board, Action action);
+int addPosToTable(int index, int colour, int depth, Board board, \
+    Action action);
 int genHashCode(Piece allPieces[8][8]);
 int initHashBoard();
 

@@ -1,20 +1,31 @@
 #include "interface.h"
 
+/* init trans table */
+int
+initTransTable()
+{
+    int i;
+
+    for (i = 0; i < TABLE; i++) {
+        transTable[i].depth = -1;
+    }
+    
+    return i;
+}
+
 /* returns whether the position in the table at index matches what is passed */
 int
 positionMatch(int colour, int depth, Board board, int index)
 {
     Position pos = transTable[index];
 
-    return pos.colour == colour && pos.depth >= depth;
+    return pos.colour == colour && pos.depth > depth;
 }
 
 /* adds a position to the transtable */
 int
-addPosToTable(int colour, int depth, Board board, Action action)
+addPosToTable(int index, int colour, int depth, Board board, Action action)
 {
-    int index = genHashCode(board.allPieces);
-
     transTable[index].board = board;
     transTable[index].depth = depth;
     transTable[index].colour = colour;
@@ -51,7 +62,7 @@ initHashBoard()
 {
     int m, n, r;
 
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
 
     for (m = 0; m < SIDE; m++) {
         for (n = 0; n < SIDE; n++) {
