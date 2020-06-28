@@ -10,7 +10,7 @@
 #define SIDE 8
 #define MOVES 256
 #define CAPTURED -1
-#define DEPTH 5
+#define DEPTH 6
 #define TABLE 999999
 
 #define LAST_ACTION { .m = 0 , .n = 0, .movem = 0, .moven = 0, \
