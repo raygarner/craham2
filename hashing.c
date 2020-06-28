@@ -11,6 +11,9 @@ genHashCode(Piece allPieces[8][8])
             
             if (allPieces[m][n].typeVal != EMPTY) {
                 total += HASHBOARD[m][n];
+                total += allPieces[m][n].typeVal;
+                total += allPieces[m][n].colour;
+                total += allPieces[m][n].mc;
             }
         }
     }
@@ -29,10 +32,8 @@ initHashBoard()
 
     for (m = 0; m < SIDE; m++) {
         for (n = 0; n < SIDE; n++) {
-            r = rand();
+            r = rand() / 100000;
             HASHBOARD[m][n] = r;
-            printf("%d\n", r);
-
         }
     }
 
