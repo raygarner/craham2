@@ -1,5 +1,14 @@
 #include "interface.h"
 
+/* returns whether the position in the table at index matches what is passed */
+int
+positionMatch(int colour, int depth, Board board, int index)
+{
+    Position pos = transTable[index];
+
+    return pos.colour == colour && pos.depth >= depth;
+}
+
 /* adds a position to the transtable */
 int
 addPosToTable(int colour, int depth, Board board, Action action)
@@ -11,7 +20,7 @@ addPosToTable(int colour, int depth, Board board, Action action)
     transTable[index].colour = colour;
     transTable[index].action = action;
 
-    return 0;
+    return index;
 }
 
 /* generates an index to use based off of the board layout */
