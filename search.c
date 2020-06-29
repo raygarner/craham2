@@ -8,11 +8,17 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
     Action legalMoves[MOVES];
     int index, hashcode;
     
+    /*
     hashcode = genHashCode(board.allPieces); 
     
     if (positionMatch(colour, depth, board, hashcode)) {
+        printf("match\n");
+        printBoard(board.allPieces);
+        printBoard(transTable[hashcode].board.allPieces);
+        getchar();
         return transTable[hashcode].action;
     }
+    */
 
     index = addAllLegalMoves(colour,board,legalMoves);
 
@@ -23,17 +29,14 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
             action.eval = 1000000;
         }
 
-        printBoard(board.allPieces);
-        getchar();
-
-        addPosToTable(hashcode, colour, depth, board, action);
+        //addPosToTable(hashcode, colour, depth, board, action);
 
         return action;
     }
 
     if (depth == 0) {
         action.eval = totalMaterial(board.allPieces);
-        addPosToTable(hashcode, colour, depth, board, action);
+        //addPosToTable(hashcode, colour, depth, board, action);
 
         return action;
     }
@@ -44,7 +47,7 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 
     action = strongestMoveFromList(colour, legalMoves);
 
-    addPosToTable(hashcode, colour, depth, board, action);
+    //addPosToTable(hashcode, colour, depth, board, action);
 
     return action;
 }

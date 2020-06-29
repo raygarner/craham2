@@ -76,6 +76,8 @@ typedef struct Position {
 extern const Action LASTACTION;
 extern const Piece EMPTYSQUARE;
 extern int HASHBOARD[8][8];
+int HASHCOLOUR[2];
+int HASHTYPE[6];
 extern Position transTable[999999];
 
 /* board.c */
@@ -161,9 +163,12 @@ int kingMoveLegality(int m, int n, int movem, int moven, Board board, \
 /* hashing.c */
 int initTransTable();
 int positionMatch(int colour, int depth, Board board, int index);
+int compareAllPieces(Piece a[8][8], Piece b[8][8]);
+int comparePieces(Piece a, Piece b);
 int addPosToTable(int index, int colour, int depth, Board board, \
     Action action);
 int genHashCode(Piece allPieces[8][8]);
+int typeValIndex(int typeVal);
 int initHashBoard();
 
 #endif
