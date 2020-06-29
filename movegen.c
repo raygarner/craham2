@@ -163,7 +163,6 @@ legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index)
     int dir = DIRECTION(colour);
     Board newBoard;
     
-    
     if (board.allPieces[m+dir][n].typeVal == EMPTY && \
     !willBeInCheck(m, n, dir, 0, board)) {
         legalMoves[index].m = m;
@@ -225,6 +224,8 @@ legalPawnCaps(int m, int n, Board board, Action *legalMoves, int index)
             }
         }
     }
+
+    return index;
 }
 
 /* adds legal moves for one knight */
@@ -609,6 +610,7 @@ Action *legalMoves, int index)
     if (board.allPieces[m][n].colour != \
     board.allPieces[m+movem][n+moven].colour && \
     board.allPieces[m+movem][n+moven].typeVal != EMPTY && \
+    isOnBoard(m+movem, n+moven) && \
     !willBeInCheck(m,n,movem,moven,board) && \
     !kingsTooClose(m,n,movem,moven,board)) {
         legalMoves[index].m = m;

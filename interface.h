@@ -90,6 +90,7 @@ int addPawns(int row, int colour, Piece allPieces[8][8]);
 int addTwoPieces(int column, int typeVal, Piece allPieces[8][8]);
 int addEmptySquares(Piece allPieces[8][8]);
 Board executeMove(int m, int n, int movem, int moven, Board board);
+Board executeCap(int m, int n, int movem, int moven, Board board);
 int resetEnemyPawns(int colour, Piece allPieces[8][8]);
 Board executeCastle(int m, int moven, Board board);
 int captureEnPassant(int m, int n, int movem, int moven, \
@@ -137,6 +138,8 @@ int willBeInCheck(int m, int n, int movem, int moven, Board board);
 int totalMaterial(Piece allPieces[8][8]);
 
 /* search.c */
+Action findMostEpicQuietMove(Pair ab, int depth, int colour, Board board);
+Action *addEvalsQuiet(Pair ab, int depth, int colour, Board board, Action *legalMoves);
 Action findMostEpicMove(Pair ab, int depth, int colour, Board board);
 Action *addEvals(Pair ab, int depth, int colour, Board board, \
     Action *legalMoves);

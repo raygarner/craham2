@@ -2,12 +2,95 @@
 
 /* finds the strongest move for a colour in a position */
 Action 
+findMostEpicQuietMove(Pair ab, int depth, int colour, Board board)
+{
+    Action action;
+    Action legalMoves[MOVES];
+    int index, hashcode;
+    
+
+    /*
+    hashcode = genHashCode(board.allPieces); 
+    
+    if (positionMatch(colour, depth, board, hashcode)) {
+        printf("match\n");
+        printBoard(board.allPieces);
+        printBoard(transTable[hashcode].board.allPieces);
+        getchar();
+        return transTable[hashcode].action;
+    }
+    */
+
+    index = addAllLegalCaps(colour,board,legalMoves);
+
+    if (index == 0) {
+        action.eval = totalMaterial(board.allPieces);
+
+        return action;
+    }
+
+    legalMoves[index] = LASTACTION;
+
+    addEvalsQuiet(ab,depth,colour,board,legalMoves);
+
+    action = strongestMoveFromList(colour, legalMoves);
+
+    //addPosToTable(hashcode, colour, depth, board, action);
+
+    return action;
+}
+
+/* adds evals for moves */
+Action *
+addEvalsQuiet(Pair ab, int depth, int colour, Board board, Action *legalMoves)
+{
+    Board newBoard; 
+    int index, i = 0;
+    Pair explore;
+    Action bestMove;
+    int eval = totalMaterial(board.allPieces);
+    
+    explore = dontExplore(ab, colour, eval);
+    
+    if (explore.a) {
+        legalMoves[0].eval = explore.b;
+        legalMoves[1] = LASTACTION;
+        return legalMoves;
+    }
+
+    ab = updateAB(ab,colour,eval);
+
+    while (!isLastAction(legalMoves[i])) {
+        newBoard = executeCap(legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, \
+            legalMoves[i].moven, board);
+
+        bestMove = findMostEpicQuietMove(ab, depth-1, !colour, newBoard);
+        
+        explore = dontExplore(ab, colour, bestMove.eval);
+
+        if (explore.a) {
+            legalMoves[i].eval = explore.b;
+            legalMoves[i+1] = LASTACTION;
+            return legalMoves;
+        } else {
+            legalMoves[i].eval = bestMove.eval;
+            ab = updateAB(ab,colour,bestMove.eval);
+            i++;
+        }
+    }
+
+    return legalMoves;
+}
+
+/* finds the strongest move for a colour in a position */
+Action 
 findMostEpicMove(Pair ab, int depth, int colour, Board board)
 {
     Action action;
     Action legalMoves[MOVES];
     int index, hashcode;
     
+
     /*
     hashcode = genHashCode(board.allPieces); 
     
@@ -35,10 +118,12 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
     }
 
     if (depth == 0) {
-        action.eval = totalMaterial(board.allPieces);
+        //action.eval = totalMaterial(board.allPieces);
         //addPosToTable(hashcode, colour, depth, board, action);
+        action = findMostEpicQuietMove(ab,depth,colour,board);
 
         return action;
+        
     }
 
     legalMoves[index] = LASTACTION;
@@ -60,6 +145,8 @@ addEvals(Pair ab, int depth, int colour, Board board, Action *legalMoves)
     int index, i = 0;
     Pair explore;
     Action bestMove;
+
+
 
     while (!isLastAction(legalMoves[i])) {
         newBoard = executeMove(legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, \

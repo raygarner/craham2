@@ -106,7 +106,6 @@ executeMove(int m, int n, int movem, int moven, Board board)
         board.allPieces[m][n].mc++;
     }
     
-
     if (board.allPieces[m][n].typeVal == KING && abs(moven) > 1) {
         board = executeCastle(m, moven, board);
 
@@ -121,14 +120,47 @@ executeMove(int m, int n, int movem, int moven, Board board)
         board.allPieces[m][n] = EMPTYSQUARE;
 
     }
-
-
         
     resetEnemyPawns(colour, board.allPieces);
 
     return board;
 }
 
+/* executes a cap on the board and returns the new board
+ * assumes move is legal */
+Board
+executeCap(int m, int n, int movem, int moven, Board board)
+{
+    int colour = board.allPieces[m][n].colour;
+
+    if (board.allPieces[m][n].typeVal == KING) {
+        board.kingm[colour] = m + movem;
+        board.kingn[colour] = n + moven;
+    }
+
+    if (board.allPieces[m][n].typeVal == PAWN && \
+    m + movem == HOMEROW(!colour)) {
+            board.allPieces[m][n].typeVal = QUEEN;
+    }
+    
+    board.allPieces[m][n].mc++;
+
+    if (board.allPieces[m][n].typeVal == PAWN && moven != 0 && \
+    board.allPieces[m+movem][n+moven].typeVal == EMPTY) {
+
+        captureEnPassant(m, n, movem, moven, board.allPieces);
+
+    } else {
+        board.allPieces[m+movem][n+moven] = board.allPieces[m][n];
+
+        board.allPieces[m][n] = EMPTYSQUARE;
+
+    }
+        
+    resetEnemyPawns(colour, board.allPieces);
+
+    return board;
+}
 /* resets the move count for the enemy pawns */
 int
 resetEnemyPawns(int colour, Piece allPieces[8][8])
