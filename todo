@@ -1,7 +1,6 @@
-search extensions and pruning
 uci
 move ordering
 bitboards
 opening book
 cli ui improvements
-quiesence search
+set quiet search max depth

@@ -8,19 +8,6 @@ findMostEpicQuietMove(Pair ab, int depth, int colour, Board board)
     Action legalMoves[MOVES];
     int index, hashcode;
     
-
-    /*
-    hashcode = genHashCode(board.allPieces); 
-    
-    if (positionMatch(colour, depth, board, hashcode)) {
-        printf("match\n");
-        printBoard(board.allPieces);
-        printBoard(transTable[hashcode].board.allPieces);
-        getchar();
-        return transTable[hashcode].action;
-    }
-    */
-
     index = addAllLegalCaps(colour,board,legalMoves);
 
     if (index == 0) {
@@ -34,8 +21,6 @@ findMostEpicQuietMove(Pair ab, int depth, int colour, Board board)
     addEvalsQuiet(ab,depth,colour,board,legalMoves);
 
     action = strongestMoveFromList(colour, legalMoves);
-
-    //addPosToTable(hashcode, colour, depth, board, action);
 
     return action;
 }
@@ -89,19 +74,6 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
     Action action;
     Action legalMoves[MOVES];
     int index, hashcode;
-    
-
-    /*
-    hashcode = genHashCode(board.allPieces); 
-    
-    if (positionMatch(colour, depth, board, hashcode)) {
-        printf("match\n");
-        printBoard(board.allPieces);
-        printBoard(transTable[hashcode].board.allPieces);
-        getchar();
-        return transTable[hashcode].action;
-    }
-    */
 
     index = addAllLegalMoves(colour,board,legalMoves);
 
@@ -112,14 +84,10 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
             action.eval = 1000000;
         }
 
-        //addPosToTable(hashcode, colour, depth, board, action);
-
         return action;
     }
 
     if (depth == 0) {
-        //action.eval = totalMaterial(board.allPieces);
-        //addPosToTable(hashcode, colour, depth, board, action);
         action = findMostEpicQuietMove(ab,depth,colour,board);
 
         return action;
@@ -132,8 +100,6 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 
     action = strongestMoveFromList(colour, legalMoves);
 
-    //addPosToTable(hashcode, colour, depth, board, action);
-
     return action;
 }
 
@@ -145,8 +111,6 @@ addEvals(Pair ab, int depth, int colour, Board board, Action *legalMoves)
     int index, i = 0;
     Pair explore;
     Action bestMove;
-
-
 
     while (!isLastAction(legalMoves[i])) {
         newBoard = executeMove(legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, \
