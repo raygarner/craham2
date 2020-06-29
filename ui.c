@@ -18,6 +18,7 @@ int printBoard(Piece allPieces[8][8])
             piece = allPieces[m][n];
             printf("%c", getPieceIcon(piece.typeVal, piece.colour));
             printf(" ");
+            printf("\033[0m"); /* reset colour */
         }
         printf("\n");
     }
@@ -30,40 +31,40 @@ char getPieceIcon(int typeVal, int colour)
 {
     switch(typeVal) {
     case KING :
-        if (colour)
-            return 'K';
-        else
-            return 'k';
+        if (!colour) {
+            printf("\033[0;34m"); /* set colour to blue */
+        }
+        return 'k';
 
     case QUEEN :
-        if (colour)
-            return 'Q';
-        else
-            return 'q';
+        if (!colour) {
+            printf("\033[0;34m"); /* set colour to blue */
+        }
+        return 'q';
 
     case ROOK :
-        if (colour)
-            return 'R';
-        else
-            return 'r';
+        if (!colour) {
+            printf("\033[0;34m"); /* set colour to blue */
+        }
+        return 'r';
 
     case BISHOP :
-        if (colour)
-            return 'B';
-        else
-            return 'b';
+        if (!colour) {
+            printf("\033[0;34m"); /* set colour to blue */
+        }
+        return 'b';
 
     case KNIGHT :
-        if (colour)
-            return 'N';
-        else
-            return 'n';
+        if (!colour) {
+            printf("\033[0;34m"); /* set colour to blue */
+        }
+        return 'n';
 
     case PAWN :
-        if (colour)
-            return 'P';
-        else
-            return 'p';
+        if (!colour) {
+            printf("\033[0;34m"); /* set colour to blue */
+        }
+        return 'p';
 
     case EMPTY :
         return '-';

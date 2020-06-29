@@ -34,9 +34,15 @@ int main(int argc, char **argv)
     }
     */
     
+    bestMove.m = 0;
+    bestMove.n = 0;
+    bestMove.movem = 0;
+    bestMove.moven = 0;
 
     while (1) {
         printBoard(board.allPieces);
+        printf("craham's move: (%d,%d) (%d,%d)\n", bestMove.m, bestMove.n, \
+            bestMove.movem, bestMove.moven);
         printf("material: %d\n", totalMaterial(board.allPieces));
 
         board = movePrompt(board);
