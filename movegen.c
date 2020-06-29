@@ -176,20 +176,38 @@ legalKnightMoves(int m, int n, Board board, Action *legalMoves, int index)
 
     Board newBoard = board;
 
+    /*
     newBoard.allPieces[m][n] = EMPTYSQUARE;
 
     if (inCheck(board.allPieces[m][n].colour, newBoard)) {
         return index;
     }
+    */
 
-    index = knightMoveLegality(m, n,1,2,board,legalMoves,index);
-    index = knightMoveLegality(m, n,-1,2,board,legalMoves,index);
-    index = knightMoveLegality(m, n,1,-2,board,legalMoves,index);
-    index = knightMoveLegality(m, n,-1,-2,board,legalMoves,index);
-    index = knightMoveLegality(m, n,2,1,board,legalMoves,index);
-    index = knightMoveLegality(m, n,-2,1,board,legalMoves,index);
-    index = knightMoveLegality(m, n,2,-1,board,legalMoves,index);
-    index = knightMoveLegality(m, n,-2,-1,board,legalMoves,index);
+
+    if (isOnBoard(m+1, n+2) && !willBeInCheck(m,n,1,2,board))
+        index = knightMoveLegality(m, n,1,2,board,legalMoves,index);
+
+    if (isOnBoard(m-1, n+2) && !willBeInCheck(m,n,-1,2,board))
+        index = knightMoveLegality(m, n,-1,2,board,legalMoves,index);
+
+    if (isOnBoard(m+1, n-2) && !willBeInCheck(m,n,1,-2,board))
+        index = knightMoveLegality(m, n,1,-2,board,legalMoves,index);
+
+    if (isOnBoard(m-1, n-2) && !willBeInCheck(m,n,-1,-2,board))
+        index = knightMoveLegality(m, n,-1,-2,board,legalMoves,index);
+
+    if (isOnBoard(m+2, n+1) && !willBeInCheck(m,n,2,1,board))
+        index = knightMoveLegality(m, n,2,1,board,legalMoves,index);
+
+    if (isOnBoard(m-2, n+1) && !willBeInCheck(m,n,-2,1,board))
+        index = knightMoveLegality(m, n,-2,1,board,legalMoves,index);
+
+    if (isOnBoard(m+2, n-1) && !willBeInCheck(m,n,2,-1,board))
+        index = knightMoveLegality(m, n,2,-1,board,legalMoves,index);
+
+    if (isOnBoard(m-2, n-1) && !willBeInCheck(m,n,-2,-1,board))
+        index = knightMoveLegality(m, n,-2,-1,board,legalMoves,index);
 
     return index;
 }
@@ -216,30 +234,10 @@ Action *legalMoves, int index)
 int
 legalBishopMoves(int m, int n, Board board, Action *legalMoves, int index)
 {
-    /*
-    if (isOnBoard(m+1, n+1) && !willBeInCheck(m, n, 1, 1, board)) {
-        index = bishopLineLegality(m,n,1,1,board,legalMoves,index);
-        index = bishopLineLegality(m,n,-1,-1,board,legalMoves,index);
-    }
-
-
-    if (isOnBoard(m-1, n+1) && !willBeInCheck(m, n, -1, 1, board)) {
-        index = bishopLineLegality(m,n,-1,1,board,legalMoves,index);
-        index = bishopLineLegality(m,n,1,-1,board,legalMoves,index);
-    }
-    */
-
-    if (isOnBoard(m+1, n+1) && !willBeInCheck(m,n,1,1,board))
-        index = bishopLineLegality(m,n,1,1,board,legalMoves,index);
-
-    if (isOnBoard(m-1, n+1) && !willBeInCheck(m,n,-1,1,board))
-        index = bishopLineLegality(m,n,-1,1,board,legalMoves,index);
-
-    if (isOnBoard(m+1, n-1) && !willBeInCheck(m,n,1,-1,board))
-        index = bishopLineLegality(m,n,1,-1,board,legalMoves,index);
-    
-    if (isOnBoard(m-1, n-1) && !willBeInCheck(m,n,-1,-1,board))
-        index = bishopLineLegality(m,n,-1,-1,board,legalMoves,index);
+    index = bishopLineLegality(m,n,1,1,board,legalMoves,index);
+    index = bishopLineLegality(m,n,-1,1,board,legalMoves,index);
+    index = bishopLineLegality(m,n,1,-1,board,legalMoves,index);
+    index = bishopLineLegality(m,n,-1,-1,board,legalMoves,index);
 
     return index;
 }
@@ -252,26 +250,30 @@ Action *legalMoves, int index)
     
     while (isOnBoard(m+movem, n+moven) && \
     board.allPieces[m+movem][n+moven].typeVal == EMPTY) {
-        legalMoves[index].m = m;
-        legalMoves[index].n = n;
-        legalMoves[index].movem = movem;
-        legalMoves[index].moven = moven;
-/*         legalMoves[index].eval = \ */
-/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
-        index++;
+        if (!willBeInCheck(m,n,movem,moven,board)) {
+            legalMoves[index].m = m;
+            legalMoves[index].n = n;
+            legalMoves[index].movem = movem;
+            legalMoves[index].moven = moven;
+    /*         legalMoves[index].eval = \ */
+    /*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
+            index++;
+        }
         movem = furtherFromZero(movem);
         moven = furtherFromZero(moven);
     }
 
     if (isOnBoard(m+movem, n+moven) &&
     board.allPieces[m+movem][n+moven].colour != board.allPieces[m][n].colour) {
-        legalMoves[index].m = m;
-        legalMoves[index].n = n;
-        legalMoves[index].movem = movem;
-        legalMoves[index].moven = moven;
-/*         legalMoves[index].eval = \ */
-/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
-        index++;
+        if (!willBeInCheck(m,n,movem,moven,board)) {
+            legalMoves[index].m = m;
+            legalMoves[index].n = n;
+            legalMoves[index].movem = movem;
+            legalMoves[index].moven = moven;
+    /*         legalMoves[index].eval = \ */
+    /*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
+            index++;
+        }
     }
 
     return index;
@@ -281,29 +283,10 @@ Action *legalMoves, int index)
 int
 legalRookMoves(int m, int n, Board board, Action *legalMoves, int index)
 {
-    /*
-    if (isOnBoard(m+1, n) && !willBeInCheck(m, n, 1, 0, board)) {
-        index = rookLineLegality(m,n,1,0,board,legalMoves,index);
-        index = rookLineLegality(m,n,-1,0,board,legalMoves,index);
-    }
-    
-    if (isOnBoard(m, n+1) && !willBeInCheck(m, n, 0, 1, board)) {
-        index = rookLineLegality(m,n,0,1,board,legalMoves,index);
-        index = rookLineLegality(m,n,0,-1,board,legalMoves,index);
-    }
-    */
-
-    if (isOnBoard(m+1, n) && !willBeInCheck(m,n,1,0,board))
-        index = rookLineLegality(m,n,1,0,board,legalMoves,index);
-
-    if (isOnBoard(m-1, n) && !willBeInCheck(m,n,-1,0,board))
-        index = rookLineLegality(m,n,-1,0,board,legalMoves,index);
-
-    if (isOnBoard(m, n-1) && !willBeInCheck(m,n,0,-1,board))
-        index = rookLineLegality(m,n,-1,0,board,legalMoves,index);
-
-    if (isOnBoard(m, n+1) && !willBeInCheck(m,n,0,1,board))
-        index = rookLineLegality(m,n,-1,0,board,legalMoves,index);
+    index = rookLineLegality(m,n,1,0,board,legalMoves,index);
+    index = rookLineLegality(m,n,-1,0,board,legalMoves,index);
+    index = rookLineLegality(m,n,0,1,board,legalMoves,index);
+    index = rookLineLegality(m,n,0,-1,board,legalMoves,index);
 
     return index;
 }
@@ -316,13 +299,15 @@ Action *legalMoves, int index)
     
     while (isOnBoard(m+movem, n+moven) && \
     board.allPieces[m+movem][n+moven].typeVal == EMPTY) {
-        legalMoves[index].m = m;
-        legalMoves[index].n = n;
-        legalMoves[index].movem = movem;
-        legalMoves[index].moven = moven;
-/*         legalMoves[index].eval = \ */
-/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
-        index++;
+        if (!willBeInCheck(m,n,movem,moven,board)) {
+            legalMoves[index].m = m;
+            legalMoves[index].n = n;
+            legalMoves[index].movem = movem;
+            legalMoves[index].moven = moven;
+    /*         legalMoves[index].eval = \ */
+    /*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
+            index++;
+        }
 
         if (movem == 0) {
             moven = furtherFromZero(moven);
@@ -333,13 +318,15 @@ Action *legalMoves, int index)
 
     if (isOnBoard(m+movem, n+moven) &&
     board.allPieces[m+movem][n+moven].colour != board.allPieces[m][n].colour) {
-        legalMoves[index].m = m;
-        legalMoves[index].n = n;
-        legalMoves[index].movem = movem;
-        legalMoves[index].moven = moven;
-/*         legalMoves[index].eval = \ */
-/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
-        index++;
+        if (!willBeInCheck(m,n,movem,moven,board)) {
+            legalMoves[index].m = m;
+            legalMoves[index].n = n;
+            legalMoves[index].movem = movem;
+            legalMoves[index].moven = moven;
+    /*         legalMoves[index].eval = \ */
+    /*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
+            index++;
+        }
     }
 
     return index;

@@ -23,6 +23,9 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
             action.eval = 1000000;
         }
 
+        printBoard(board.allPieces);
+        getchar();
+
         addPosToTable(hashcode, colour, depth, board, action);
 
         return action;
