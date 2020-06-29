@@ -10,7 +10,7 @@
 #define SIDE 8
 #define MOVES 256
 #define CAPTURED -1
-#define DEPTH 3
+#define DEPTH 4
 //#define TABLE 999999
 
 #define LAST_ACTION { .m = 0 , .n = 0, .movem = 0, .moven = 0, \
@@ -148,21 +148,38 @@ int isLastAction(Action action);
 Action *sortMoves(int colour, Action *legalMoves);
 Action strongestMoveFromList(int colour, Action *legalMoves);
 int addAllLegalMoves(int colour, Board board, Action *legalMoves);
+int addAllLegalCaps(int colour, Board board, Action *legalMoves);
 int addLegalMoves(int m, int n, Board board, Action *legalMoves, int index);
+int addLegalCaps(int m, int n, Board board, Action *legalMoves, int index);
 int legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index);
+int legalPawnCaps(int m, int n, Board board, Action *legalMoves, int index);
 int legalKnightMoves(int m, int n, Board board, Action *legalMoves, int index);
 int knightMoveLegality(int m, int n, int movem, int moven, Board board, \
+    Action *legalMoves, int index);
+int legalKnightCaps(int m, int n, Board board, Action *legalMoves, int index);
+int knightCapLegality(int m, int n, int movem, int moven, Board board, \
     Action *legalMoves, int index);
 int legalBishopMoves(int m, int n, Board board, Action *legalMoves, int index);
 int bishopLineLegality(int m, int n, int movem, int moven, Board board, \
     Action *legalMoves, int index);
+int legalBishopCaps(int m, int n, Board board, Action *legalMoves, int index);
+int bishopCapLegality(int m, int n, int movem, int moven, Board board, \
+    Action *legalMoves, int index);
 int legalRookMoves(int m, int n, Board board, Action *legalMoves, int index);
 int rookLineLegality(int m, int n, int movem, int moven, Board board, \
     Action *legalMoves, int index);
+int legalRookCaps(int m, int n, Board board, Action *legalMoves, int index);
+int rookCapLegality(int m, int n, int movem, int moven, Board board, \
+    Action *legalMoves, int index);
 int legalQueenMoves(int m, int n, Board board, Action *legalMoves, int index);
+int legalQueenCaps(int m, int n, Board board, Action *legalMoves, int index);
 int legalKingMoves(int m, int n, Board board, Action *legalMoves, int index);
 int kingMoveLegality(int m, int n, int movem, int moven, Board board, \
     Action *legalMoves, int index);
+int legalKingCaps(int m, int n, Board board, Action *legalMoves, int index);
+int kingCapLegality(int m, int n, int movem, int moven, Board board, \
+    Action *legalMoves, int index);
+
 
 /* hashing.c */
 int initTransTable();
