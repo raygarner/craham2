@@ -11,7 +11,7 @@
 #define MOVES 256
 #define CAPTURED -1
 #define DEPTH 4
-#define TABLE 999999
+//#define TABLE 999999
 
 #define LAST_ACTION { .m = 0 , .n = 0, .movem = 0, .moven = 0, \
     .eval = 0 }
@@ -65,20 +65,24 @@ typedef struct Board {
     int kingn[2];
 } Board;
 
+/*
 typedef struct Position {
     Board board;
     Action action;
     int colour;
     int depth;
 } Position;
+*/
 
 /* globals.c */
 extern const Action LASTACTION;
 extern const Piece EMPTYSQUARE;
+/*
 extern int HASHBOARD[8][8];
 int HASHCOLOUR[2];
 int HASHTYPE[6];
 extern Position transTable[999999];
+*/
 
 /* board.c */
 Board addAllPieces(Board board);

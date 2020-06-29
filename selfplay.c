@@ -15,8 +15,10 @@ int main(int argc, char **argv)
     ab.b = 2000000;
 
     board = addAllPieces(board);
+    /*
     initHashBoard();
     initTransTable();
+    */
     
    
 
