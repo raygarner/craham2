@@ -6,11 +6,8 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
 {
     Action action;
     Action legalMoves[MOVES];
-    int index = 0;
-    int hashcode;
+    int index, hashcode;
     
-    //printf("%d %d\n", ab.a, ab.b);
-
     hashcode = genHashCode(board.allPieces); 
     
     if (positionMatch(colour, depth, board, hashcode)) {
@@ -20,46 +17,33 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
     index = addAllLegalMoves(colour,board,legalMoves);
 
     if (index == 0) {
-        //printBoard(board.allPieces);
         if (colour) {
             action.eval = -1000000;
         } else {
             action.eval = 1000000;
         }
-    
 
         addPosToTable(hashcode, colour, depth, board, action);
-        return action;
 
+        return action;
     }
 
     if (depth == 0) {
-        /*
-        action.piece.typeVal = KING;
-        action.piece.pos.m = 0;
-        action.piece.pos.n = 0;
-        action.piece.colour = colour;
-        action.piece.mc = 0;
-        action.move.m = 0;
-        action.move.n = 0;
-        */
         action.eval = totalMaterial(board.allPieces);
         addPosToTable(hashcode, colour, depth, board, action);
 
         return action;
     }
 
-
     legalMoves[index] = LASTACTION;
-    /* sortMoves(colour, legalMoves);*/
 
     addEvals(ab,depth,colour,board,legalMoves);
 
     action = strongestMoveFromList(colour, legalMoves);
 
     addPosToTable(hashcode, colour, depth, board, action);
-    return action;
 
+    return action;
 }
 
 /* adds evals for moves */
@@ -71,15 +55,13 @@ addEvals(Pair ab, int depth, int colour, Board board, Action *legalMoves)
     Pair explore;
     Action bestMove;
 
-
     while (!isLastAction(legalMoves[i])) {
-
         newBoard = executeMove(legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, \
             legalMoves[i].moven, board);
+
         bestMove = findMostEpicMove(ab, depth-1, !colour, newBoard);
         
         explore = dontExplore(ab, colour, bestMove.eval);
-
 
         if (explore.a) {
             legalMoves[i].eval = explore.b;
@@ -87,18 +69,9 @@ addEvals(Pair ab, int depth, int colour, Board board, Action *legalMoves)
             return legalMoves;
         } else {
             legalMoves[i].eval = bestMove.eval;
-            newBoard = board;
             ab = updateAB(ab,colour,bestMove.eval);
             i++;
         }
-        
-
-        /*
-        legalMoves[i].eval = eval;
-        newBoard = board;
-        ab = updateAB(ab,colour,eval);
-        i++;
-        */
     }
 
     return legalMoves;
@@ -111,18 +84,18 @@ dontExplore(Pair ab, int colour, int eval)
     Pair explore;
 
     if (colour) {
-        explore.b = ab.b;
 
         if (eval >= ab.b) {
             explore.a = 1;
+            explore.b = ab.b;
         } else {
             explore.a = 0;
         }
     } else {
-        explore.b = ab.a;
 
         if (eval <= ab.a) {
             explore.a = 1;
+            explore.b = ab.a;
         } else {
             explore.a = 0;
         }
