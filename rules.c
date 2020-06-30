@@ -188,7 +188,7 @@ validCastle(int m, int n, int movem, int moven, Board board)
             return 0;
         }
 
-        start = 2;
+        start = 1;
         end = 4;
     }
 

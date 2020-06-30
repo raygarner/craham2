@@ -36,12 +36,10 @@ totalMaterial(Piece allPieces[8][8])
 int 
 calcIndex(int colour, int m, int n)
 {
-    int i = m * 8 + n;
+    if (colour == BLACK)
+        m = 7 - m;
 
-    if (colour)
-        return i;
-    else
-        return 63 - i;
+    return m * 8 + n;
 }
 
 /* returns the positional eval for one side */
@@ -75,6 +73,9 @@ int
 evalPiece(int m, int n, Piece allPieces[8][8])
 {
     switch(allPieces[m][n].typeVal) {
+    case PAWN :
+        return evalPawn(calcIndex(allPieces[m][n].colour, m, n));
+
     case BISHOP :
         return evalBishop(calcIndex(allPieces[m][n].colour, m, n));
 
@@ -83,6 +84,9 @@ evalPiece(int m, int n, Piece allPieces[8][8])
 
     case ROOK :
         return evalRook(calcIndex(allPieces[m][n].colour, m, n));
+
+    case KING :
+        return evalKing(calcIndex(allPieces[m][n].colour, m, n));
 
     default :
         return 0;
@@ -113,7 +117,7 @@ evalBishop(int index)
     static const int squares[] = {-20,-10,-10,-10,-10,-10,-10,-20,
                                 -10,  0,  0,  0,  0,  0,  0,-10,
                                 -10,  0,  5, 10, 10,  5,  0,-10,
-                                -10,  5,  5, 10, 10,  5,  5,-10,
+                                -10, 10,  5, 10, 10,  5, 10,-10,
                                 -10,  0, 10, 10, 10, 10,  0,-10,
                                 -10, 10, 10, -5, -5, 10, 10,-10,
                                 -10, 10,  5,  5,  5,  5, 10,-10,
@@ -126,7 +130,6 @@ evalBishop(int index)
 int
 evalRook(int index)
 {
-
      static const int squares[] = { 0,  0,  0,  0,  0,  0,  0,  0,
                               5, 10, 10, 10, 10, 10, 10,  5,
                              -5,  0,  0,  0,  0,  0,  0, -5,
@@ -134,7 +137,38 @@ evalRook(int index)
                              -5,  0,  0,  0,  0,  0,  0, -5,
                              -5,  0,  0,  0,  0,  0,  0, -5,
                              -5,  0,  0,  0,  0,  0,  0, -5,
-                              0,  0,  0,  5,  5,  5,  0,  0};
+                              0,  0,  0,  5,  5,  0,  0,  0};
     return squares[index];
+}
 
+/* returns the position eval for a pawn */
+int 
+evalPawn(int index)
+{
+   static const int squares[] = { 0,  0,  0,  0,  0,  0,  0,  0,
+                                50, 50, 50, 50, 50, 50, 50, 50,
+                                10, 10, 20, 30, 30, 20, 10, 10,
+                                 5,  5, 10, 20, 20, 10,  5,  5,
+                                 0,  0,  0, 20, 20,-25,-20,  0,
+                                 5, -5,-10,  0,  0,-10, -5,  5,
+                                 5, 10, 10,-20,-20, 10, 10,  5,
+                                 0,  0,  0,  0,  0,  0,  0,  0};
+
+    return squares[index];
+}
+
+/* returns the position eval for a king */
+int
+evalKing(int index)
+{
+    static const int squares[] = {0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0,-20,-20,-20,0,0,
+                                  0, 0, 0,-20,-20,-20,0,0};
+
+    return squares[index];
 }

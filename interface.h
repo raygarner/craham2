@@ -127,6 +127,8 @@ int evalPiece(int m, int n, Piece allPieces[8][8]);
 int evalKnight(int index);
 int evalBishop(int index);
 int evalRook(int index);
+int evalPawn(int index);
+int evalKing(int index);
 
 
 /* search.c */
