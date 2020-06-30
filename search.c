@@ -7,11 +7,12 @@ findMostEpicQuietMove(Pair ab, int depth, int colour, Board board)
     Action action;
     Action legalMoves[MOVES];
     int index, hashcode;
-    
+
     index = addAllLegalCaps(colour,board,legalMoves);
 
     if (index == 0) {
-        action.eval = totalMaterial(board.allPieces);
+        //action.eval = totalMaterial(board.allPieces);
+        action.eval = totalVal(board);
 
         return action;
     }
@@ -33,7 +34,8 @@ addEvalsQuiet(Pair ab, int depth, int colour, Board board, Action *legalMoves)
     int index, i = 0;
     Pair explore;
     Action bestMove;
-    int eval = totalMaterial(board.allPieces);
+    //int eval = totalMaterial(board.allPieces);
+    int eval = totalVal(board);
     
     explore = dontExplore(ab, colour, eval);
     

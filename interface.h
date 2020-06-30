@@ -10,7 +10,7 @@
 #define SIDE 8
 #define MOVES 256
 #define CAPTURED -1
-#define DEPTH 3
+#define DEPTH 2
 
 #define LAST_ACTION { .m = 0 , .n = 0, .movem = 0, .moven = 0, \
     .eval = 0 }
@@ -119,7 +119,15 @@ int inCheck(int colour, Board board);
 int willBeInCheck(int m, int n, int movem, int moven, Board board);
 
 /* eval.c */
+int totalVal(Board board);
 int totalMaterial(Piece allPieces[8][8]);
+int calcIndex(int colour, int m, int n);
+int evalAllPieces(Piece allPieces[8][8]);
+int evalPiece(int m, int n, Piece allPieces[8][8]);
+int evalKnight(int index);
+int evalBishop(int index);
+int evalRook(int index);
+
 
 /* search.c */
 Action findMostEpicQuietMove(Pair ab, int depth, int colour, Board board);
