@@ -99,7 +99,6 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
         action = findMostEpicQuietMove(ab,depth,colour,board);
 
         return action;
-        
     }
 
     legalMoves[index] = LASTACTION;
