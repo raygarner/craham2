@@ -36,8 +36,6 @@ strongestMoveFromList(int colour, Action *legalMoves)
 
     currentBest = legalMoves[0];
 
-    /* written this way to reduce colour case checks */
-    /* even through its ugly*/
     if (colour) {
         while (!isLastAction(legalMoves[i])) {
             if (legalMoves[i].eval > currentBest.eval) {
@@ -169,14 +167,12 @@ legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = dir;
         legalMoves[index].moven = 0;
-/*         legalMoves[index].eval = totalMaterial(board.allPieces); */
         index++;
 
         if (board.allPieces[m+dir*2][n].typeVal == EMPTY && \
         m == PAWNHOMEROW(board.allPieces[m][n].colour)) {
             legalMoves[index] = legalMoves[index-1];
             legalMoves[index].movem = dir * 2;
-/*             legalMoves[index].eval = totalMaterial(board.allPieces); */
             index++;
         }
     }
@@ -205,8 +201,6 @@ legalPawnCaps(int m, int n, Board board, Action *legalMoves, int index)
                 legalMoves[index].n = n;
                 legalMoves[index].movem = dir;
                 legalMoves[index].moven = i;
-/*                 legalMoves[index].eval = \ */
-/*                     totalMaterial(executeMove(m,n,dir,i,board).allPieces); */
                 index++;
             }
             
@@ -218,8 +212,6 @@ legalPawnCaps(int m, int n, Board board, Action *legalMoves, int index)
                 legalMoves[index].n = n;
                 legalMoves[index].movem = dir;
                 legalMoves[index].moven = i;
-/*                 legalMoves[index].eval = \ */
-/*                     totalMaterial(executeMove(m,n,dir,i,board).allPieces); */
                 index++;
             }
         }
@@ -272,8 +264,6 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
-/*         legalMoves[index].eval = \ */
-/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
         index++;
     }
 
@@ -358,8 +348,6 @@ Action *legalMoves, int index)
             legalMoves[index].n = n;
             legalMoves[index].movem = movem;
             legalMoves[index].moven = moven;
-    /*         legalMoves[index].eval = \ */
-    /*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
             index++;
         }
         movem = furtherFromZero(movem);
@@ -373,8 +361,6 @@ Action *legalMoves, int index)
             legalMoves[index].n = n;
             legalMoves[index].movem = movem;
             legalMoves[index].moven = moven;
-    /*         legalMoves[index].eval = \ */
-    /*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
             index++;
         }
     }
@@ -445,8 +431,6 @@ Action *legalMoves, int index)
             legalMoves[index].n = n;
             legalMoves[index].movem = movem;
             legalMoves[index].moven = moven;
-    /*         legalMoves[index].eval = \ */
-    /*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
             index++;
         }
 
@@ -464,8 +448,6 @@ Action *legalMoves, int index)
             legalMoves[index].n = n;
             legalMoves[index].movem = movem;
             legalMoves[index].moven = moven;
-    /*         legalMoves[index].eval = \ */
-    /*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
             index++;
         }
     }
@@ -555,7 +537,6 @@ legalKingMoves(int m, int n, Board board, Action *legalMoves, int index)
             legalMoves[index].n = n;
             legalMoves[index].movem = 0;
             legalMoves[index].moven = i;
-/*             legalMoves[index].eval = totalMaterial(board.allPieces); */
             index++;
         }
 
@@ -576,8 +557,6 @@ Action *legalMoves, int index)
         legalMoves[index].n = n;
         legalMoves[index].movem = movem;
         legalMoves[index].moven = moven;
-/*         legalMoves[index].eval = \ */
-/*             totalMaterial(executeMove(m,n,movem,moven,board).allPieces); */
         index++;
     }
 

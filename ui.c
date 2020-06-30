@@ -81,25 +81,6 @@ Board movePrompt(Board board)
 {
     int m = -1, n = -1, movem = 9, moven = 9;
 
-    /*
-    printf("Enter the move you wish to make: ");
-    scanf("%d %d %d %d", &m, &n, &movem, &moven);
-
-    if (board.allPieces[m][n].typeVal == EMPTY) {
-        printf("you're trying to move an empty square\n");
-        return board;
-    }
-
-
-    if (!validMove(m, n, movem, moven, board)) {
-        printf("INVALID MOVE\n");
-    } else if (willBeInCheck(m, n, movem, moven, board)) {
-        printf("YOU CANNOT MOVE INTO CHECK\n");
-    } else {
-        board = executeMove(m, n, movem, moven, board);
-    }
-    */
-
     while (!isOnBoard(abs(movem), abs(moven)) || !isOnBoard(m,n) || \
     !validMove(m, n, movem, moven, board) || \
     willBeInCheck(m, n, movem, moven, board) || \
@@ -109,6 +90,4 @@ Board movePrompt(Board board)
     }
 
     return executeMove(m, n, movem, moven, board);
-
-    //return board;
 }

@@ -161,11 +161,9 @@ int
 validCastle(int m, int n, int movem, int moven, Board board)
 {
     int side, start, end, i;
-    
 
     if (!(board.allPieces[m][n].mc == 0 && movem == 0))
         return 0;
-
 
     if (moven == 2) {
         side = 1;
@@ -191,7 +189,6 @@ validCastle(int m, int n, int movem, int moven, Board board)
         start = 1;
         end = 4;
     }
-
 
     for (i = start; i <= end; i++) {
         if (board.allPieces[m][i].typeVal != KING \
@@ -238,7 +235,6 @@ isPawnCapture(int colour, int movem, int moven)
 int
 validPawnMove(int m, int n, int movem, int moven, Piece allPieces[8][8])
 {
-
     int targetm, targetn;
 
     targetm = m+movem;
@@ -344,7 +340,6 @@ isThreatened(int m, int n, Board board, int colour)
         }
     }
 
-
     return 0;
 }
 
@@ -360,15 +355,6 @@ int
 willBeInCheck(int m, int n, int movem, int moven, Board board)
 {
     Board newBoard = executeMove(m, n, movem, moven, board);
-
-    /*
-    if (isOnBoard(m+movem, n+moven)) {
-        board = executeMove(m, n, movem, moven, board);
-    } else {
-        return 0;
-    }
-    */
-
 
     return inCheck(board.allPieces[m][n].colour, newBoard);
 }

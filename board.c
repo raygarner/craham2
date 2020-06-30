@@ -188,7 +188,6 @@ resetEnemyPawns(int colour, Piece allPieces[8][8])
 Board
 executeCastle(int m, int moven, Board board)
 {
-    
     int rookn, rookmoven, colour;
 
     colour = board.allPieces[m][7].colour;

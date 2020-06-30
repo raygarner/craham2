@@ -15,27 +15,10 @@ int main(int argc, char **argv)
     ab.b = 2000000;
 
     board = addAllPieces(board);
-    /*
-    initHashBoard();
-    initTransTable();
-    */
-    
-   
 
     while (1) {
         index = addAllLegalMoves(WHITE, board, legalMoves);
         legalMoves[index] = LASTACTION;
-
-
-        /*
-        printf("LEGAL MOVES:\n");
-        while (!isLastAction(legalMoves[i])) {
-            printf("%d %d\t %d %d\n", legalMoves[i].m, legalMoves[i].n, legalMoves[i].movem, legalMoves[i].moven);
-            i++;
-        }
-
-        i = 0;
-        */
 
         printBoard(board.allPieces);
         printf("material: %d\n", totalMaterial(board.allPieces));
@@ -49,7 +32,6 @@ int main(int argc, char **argv)
             bestMove.moven, board);
 
         colour = !colour;
-
     }
 
     return 0;
