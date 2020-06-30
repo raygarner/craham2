@@ -4,7 +4,7 @@
 int printBoard(Piece allPieces[8][8])
 {
     Piece piece;
-    int m, n;
+    int m, n, i;
 
     printf("  ");
     for (m = 0; m < 8; m++) {
@@ -79,7 +79,7 @@ char getPieceIcon(int typeVal, int colour)
 /* prompts the user for a move and makes it if its valid */
 Board movePrompt(Board board)
 {
-    int m = -1, n = -1, movem = 0, moven = 0;
+    int m = -1, n = -1, movem = 9, moven = 9;
 
     /*
     printf("Enter the move you wish to make: ");
@@ -100,7 +100,7 @@ Board movePrompt(Board board)
     }
     */
 
-    while (!isOnBoard(abs(movem), abs(moven)) || \
+    while (!isOnBoard(abs(movem), abs(moven)) || !isOnBoard(m,n) || \
     !validMove(m, n, movem, moven, board) || \
     willBeInCheck(m, n, movem, moven, board) || \
     board.allPieces[m][n].typeVal == EMPTY) {

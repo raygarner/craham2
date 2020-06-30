@@ -1,12 +1,15 @@
 FLAGS=-O3
 CC=gcc
-EXES=opening selfplay userselfplay
-SRC=rules.c search.c eval.c ui.c board.c movegen.c globals.c #hashing.c
+EXES=white black selfplay userselfplay
+SRC=rules.c search.c eval.c ui.c board.c movegen.c globals.c
 
-all: clean opening selfplay userselfplay
+all: clean white black selfplay userselfplay
 
-opening: $(SRC) opening.c
-	$(CC) $(FLAGS) $? -o opening
+white: $(SRC) white.c
+	$(CC) $(FLAGS) $? -o white
+
+black: $(SRC) black.c
+	$(CC) $(FLAGS) $? -o black
 
 selfplay: $(SRC) selfplay.c
 	$(CC) $(FLAGS) $? -o selfplay

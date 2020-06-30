@@ -10,7 +10,8 @@
 #define SIDE 8
 #define MOVES 256
 #define CAPTURED -1
-#define DEPTH 2
+#define DEPTH 3
+#define QDEPTH -9
 
 #define LAST_ACTION { .m = 0 , .n = 0, .movem = 0, .moven = 0, \
     .eval = 0 }
