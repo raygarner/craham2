@@ -1,6 +1,4 @@
 uci
 move ordering
-bitboards
 opening book
-cli ui improvements
-set quiet search max depth
+fix thinks your in check bug

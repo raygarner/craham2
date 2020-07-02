@@ -25,7 +25,6 @@ totalMaterial(Piece allPieces[8][8])
             } else {
                 total -= allPieces[m][n].typeVal;
             }
-
         }
     }
 

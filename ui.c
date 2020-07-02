@@ -81,12 +81,23 @@ Board movePrompt(Board board)
 {
     int m = -1, n = -1, movem = 9, moven = 9;
 
-    while (!isOnBoard(abs(movem), abs(moven)) || !isOnBoard(m,n) || \
-    !validMove(m, n, movem, moven, board) || \
-    willBeInCheck(m, n, movem, moven, board) || \
-    board.allPieces[m][n].typeVal == EMPTY) {
+    while (1) {
         printf("Enter the move you wish to make: ");
         scanf("%d %d %d %d", &m, &n, &movem, &moven);
+
+        if (!isOnBoard(abs(movem), abs(moven))) {
+            printf("You cannot move a piece off of the board\n");
+        } else if (!isOnBoard(m, n)) {
+            printf("You cannot move from a position that is not on the board\n");
+        } else if (willBeInCheck(m, n, movem, moven, board)) {
+            printf("That move will leave you in check\n");
+        } else if (board.allPieces[m][n].typeVal == EMPTY) {
+            printf("You cannot move from a square that is empty\n");
+        } else if (!validMove(m, n, movem, moven, board)) {
+            printf("That piece cannot be moved like that\n");
+        } else {
+            break; 
+        }
     }
 
     return executeMove(m, n, movem, moven, board);
