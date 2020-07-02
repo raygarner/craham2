@@ -13,7 +13,7 @@ sortMoves(int colour, Action *legalMoves)
         i = 0;
 
         while (!isLastAction(legalMoves[i+1])) {
-            if (legalMoves[i].eval >  legalMoves[i+1].eval) {
+            if (legalMoves[i].eval <  legalMoves[i+1].eval) {
                 tmp = legalMoves[i];
                 legalMoves[i] = legalMoves[i+1];
                 legalMoves[i+1] = tmp;
@@ -60,7 +60,7 @@ strongestMoveFromList(int colour, Action *legalMoves)
 /* adds a legal move to the list of all legal moves */
 int
 addOneLegalMove(int index, int m, int n, int movem, int moven, \
-Action *legalMoves)
+Action *legalMoves, Board board)
 {
     legalMoves[index].m = m;
     legalMoves[index].n = n;
@@ -172,15 +172,14 @@ legalPawnMoves(int m, int n, Board board, Action *legalMoves, int index)
 {
     int colour = board.allPieces[m][n].colour;
     int dir = DIRECTION(colour);
-    Board newBoard;
     
     if (board.allPieces[m+dir][n].typeVal == EMPTY && \
     !willBeInCheck(m, n, dir, 0, board)) {
-        index = addOneLegalMove(index,m,n,dir,0,legalMoves);
+        index = addOneLegalMove(index,m,n,dir,0,legalMoves,board);
 
         if (board.allPieces[m+dir*2][n].typeVal == EMPTY && \
         m == PAWNHOMEROW(board.allPieces[m][n].colour)) {
-            index = addOneLegalMove(index,m,n,dir*2,0,legalMoves);
+            index = addOneLegalMove(index,m,n,dir*2,0,legalMoves,board);
         }
     }
     
@@ -204,14 +203,14 @@ legalPawnCaps(int m, int n, Board board, Action *legalMoves, int index)
         if (isOnBoard(m+dir, n+i) && !willBeInCheck(m, n, dir, i, board)) {
             if (piece.typeVal != EMPTY && \
             board.allPieces[m][n].colour != piece.colour) {
-                index = addOneLegalMove(index,m,n,dir,i,legalMoves);
+                index = addOneLegalMove(index,m,n,dir,i,legalMoves,board);
             }
             
             if (piece.typeVal == EMPTY && \
             board.allPieces[m][n+i].typeVal == PAWN && \
             board.allPieces[m][n+i].colour != colour \
             && board.allPieces[m][n+i].mc == 2) {
-                index = addOneLegalMove(index,m,n,dir,i,legalMoves);
+                index = addOneLegalMove(index,m,n,dir,i,legalMoves,board);
             }
         }
     }
@@ -223,9 +222,6 @@ legalPawnCaps(int m, int n, Board board, Action *legalMoves, int index)
 int
 legalKnightMoves(int m, int n, Board board, Action *legalMoves, int index)
 {
-
-    Board newBoard = board;
-
     if (isOnBoard(m+1, n+2) && !willBeInCheck(m,n,1,2,board))
         index = knightMoveLegality(m, n,1,2,board,legalMoves,index);
 
@@ -259,7 +255,7 @@ knightMoveLegality(int m, int n, int movem, int moven, Board board, \
 Action *legalMoves, int index)
 {
     if (isValidTarget(m, n, movem, moven, board.allPieces)) {
-        index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+        index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
     }
 
     return index;
@@ -269,9 +265,6 @@ Action *legalMoves, int index)
 int
 legalKnightCaps(int m, int n, Board board, Action *legalMoves, int index)
 {
-
-    Board newBoard = board;
-
     if (isOnBoard(m+1, n+2) && !willBeInCheck(m,n,1,2,board))
         index = knightCapLegality(m, n,1,2,board,legalMoves,index);
 
@@ -307,11 +300,10 @@ Action *legalMoves, int index)
     if (board.allPieces[m][n].colour != \
     board.allPieces[m+movem][n+moven].colour && \
     board.allPieces[m][n].typeVal != EMPTY) {
-        index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+        index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
     }
 
     return index;
-
 }
 
 /* adds legal moves for one bishop */
@@ -331,11 +323,10 @@ int
 bishopLineLegality(int m, int n, int movem, int moven, Board board, \
 Action *legalMoves, int index)
 {
-    
     while (isOnBoard(m+movem, n+moven) && \
     board.allPieces[m+movem][n+moven].typeVal == EMPTY) {
         if (!willBeInCheck(m,n,movem,moven,board)) {
-            index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+            index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
         }
         movem = furtherFromZero(movem);
         moven = furtherFromZero(moven);
@@ -344,7 +335,7 @@ Action *legalMoves, int index)
     if (isOnBoard(m+movem, n+moven) &&
     board.allPieces[m+movem][n+moven].colour != board.allPieces[m][n].colour) {
         if (!willBeInCheck(m,n,movem,moven,board)) {
-            index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+            index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
         }
     }
 
@@ -368,7 +359,6 @@ int
 bishopCapLegality(int m, int n, int movem, int moven, Board board, \
 Action *legalMoves, int index)
 {
-    
     while (isOnBoard(m+movem, n+moven) && \
     board.allPieces[m+movem][n+moven].typeVal == EMPTY) {
         movem = furtherFromZero(movem);
@@ -378,7 +368,7 @@ Action *legalMoves, int index)
     if (isOnBoard(m+movem, n+moven) &&
     board.allPieces[m+movem][n+moven].colour != board.allPieces[m][n].colour) {
         if (!willBeInCheck(m,n,movem,moven,board)) {
-            index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+            index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
         }
     }
 
@@ -402,11 +392,10 @@ int
 rookLineLegality(int m, int n, int movem, int moven, Board board, \
 Action *legalMoves, int index)
 {
-    
     while (isOnBoard(m+movem, n+moven) && \
     board.allPieces[m+movem][n+moven].typeVal == EMPTY) {
         if (!willBeInCheck(m,n,movem,moven,board)) {
-            index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+            index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
         }
 
         if (movem == 0) {
@@ -419,7 +408,7 @@ Action *legalMoves, int index)
     if (isOnBoard(m+movem, n+moven) &&
     board.allPieces[m+movem][n+moven].colour != board.allPieces[m][n].colour) {
         if (!willBeInCheck(m,n,movem,moven,board)) {
-            index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+            index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
         }
     }
 
@@ -442,7 +431,6 @@ int
 rookCapLegality(int m, int n, int movem, int moven, Board board, \
 Action *legalMoves, int index)
 {
-    
     while (isOnBoard(m+movem, n+moven) && \
     board.allPieces[m+movem][n+moven].typeVal == EMPTY) {
         if (movem == 0) {
@@ -455,7 +443,7 @@ Action *legalMoves, int index)
     if (isOnBoard(m+movem, n+moven) &&
     board.allPieces[m+movem][n+moven].colour != board.allPieces[m][n].colour) {
         if (!willBeInCheck(m,n,movem,moven,board)) {
-            index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+            index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
         }
     }
 
@@ -500,7 +488,7 @@ legalKingMoves(int m, int n, Board board, Action *legalMoves, int index)
 
     for (i = -2; i <= 2; i += 4) {
         if (validCastle(m,n,0,i,board)) {
-            index = addOneLegalMove(index,m,n,0,i,legalMoves);
+            index = addOneLegalMove(index,m,n,0,i,legalMoves,board);
         }
 
     }
@@ -516,7 +504,7 @@ Action *legalMoves, int index)
     if (isValidTarget(m,n,movem,moven,board.allPieces) && \
     !willBeInCheck(m,n,movem,moven,board) && \
     !kingsTooClose(m,n,movem,moven,board)) {
-        index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+        index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
     }
 
     return index;
@@ -526,8 +514,6 @@ Action *legalMoves, int index)
 int
 legalKingCaps(int m, int n, Board board, Action *legalMoves, int index)
 {
-    int i;
-
     index = kingCapLegality(m,n,1,1,board,legalMoves,index);
     index = kingCapLegality(m,n,0,1,board,legalMoves,index);
     index = kingCapLegality(m,n,1,0,board,legalMoves,index);
@@ -551,7 +537,7 @@ Action *legalMoves, int index)
     isOnBoard(m+movem, n+moven) && \
     !willBeInCheck(m,n,movem,moven,board) && \
     !kingsTooClose(m,n,movem,moven,board)) {
-        index = addOneLegalMove(index,m,n,movem,moven,legalMoves);
+        index = addOneLegalMove(index,m,n,movem,moven,legalMoves,board);
     }
 
     return index;

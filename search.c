@@ -10,14 +10,12 @@ findMostEpicQuietMove(Pair ab, int depth, int colour, Board board)
 
     if (depth < QDEPTH) {
         action.eval = totalVal(board);
-        //printf("cut short\n");
         return action;
     }
 
     index = addAllLegalCaps(colour,board,legalMoves);
 
     if (index == 0) {
-        //action.eval = totalMaterial(board.allPieces);
         action.eval = totalVal(board);
 
         return action;

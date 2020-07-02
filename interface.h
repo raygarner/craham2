@@ -131,7 +131,6 @@ int evalRook(int index);
 int evalPawn(int index);
 int evalKing(int index);
 
-
 /* search.c */
 Action findMostEpicQuietMove(Pair ab, int depth, int colour, Board board);
 Action *addEvalsQuiet(Pair ab, int depth, int colour, Board board, Action *legalMoves);
@@ -147,7 +146,7 @@ Action *sortMoves(int colour, Action *legalMoves);
 Action strongestMoveFromList(int colour, Action *legalMoves);
 int addAllLegalMoves(int colour, Board board, Action *legalMoves);
 int addOneLegalMove(int index, int m, int n, int movem, int moven, \
-    Action *legalMoves);
+    Action *legalMoves, Board board);
 int addAllLegalCaps(int colour, Board board, Action *legalMoves);
 int addLegalMoves(int m, int n, Board board, Action *legalMoves, int index);
 int addLegalCaps(int m, int n, Board board, Action *legalMoves, int index);
