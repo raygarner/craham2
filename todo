@@ -1,4 +1,3 @@
-uci
 move ordering
 opening book
-fix thinks your in check bug
+transposition table
