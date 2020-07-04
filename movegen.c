@@ -8,21 +8,51 @@ sortMoves(int colour, Action *legalMoves)
     int i = 0;
     int swapped = 1;
 
-    while (swapped) {
-        swapped = 0;
-        i = 0;
+    if (colour) {
+        while (swapped) {
+            swapped = 0;
+            i = 0;
 
-        while (!isLastAction(legalMoves[i+1])) {
-            if (legalMoves[i].eval <  legalMoves[i+1].eval) {
-                tmp = legalMoves[i];
-                legalMoves[i] = legalMoves[i+1];
-                legalMoves[i+1] = tmp;
-                swapped = 1;
+            while (!isLastAction(legalMoves[i+1])) {
+                if (legalMoves[i].eval <  legalMoves[i+1].eval) {
+                    tmp = legalMoves[i];
+                    legalMoves[i] = legalMoves[i+1];
+                    legalMoves[i+1] = tmp;
+                    swapped = 1;
+                }
+
+                i++;
             }
+        }
+    } else {
+        while (swapped) {
+            swapped = 0;
+            i = 0;
 
-            i++;
+            while (!isLastAction(legalMoves[i+1])) {
+                if (legalMoves[i].eval >  legalMoves[i+1].eval) {
+                    tmp = legalMoves[i];
+                    legalMoves[i] = legalMoves[i+1];
+                    legalMoves[i+1] = tmp;
+                    swapped = 1;
+                }
+
+                i++;
+            }
         }
     }
+
+    /*
+    i = 0;
+
+    printf("sorted moves for %d:\n", colour);
+    while (!isLastAction(legalMoves[i])) {
+        printf("%d: %d\n", i, legalMoves[i].eval); 
+        i++;
+    }
+
+    printf("\n");
+    */
 
     return legalMoves;
 }
@@ -66,6 +96,7 @@ Action *legalMoves, Board board)
     legalMoves[index].n = n;
     legalMoves[index].movem = movem;
     legalMoves[index].moven = moven;
+    legalMoves[index].eval = totalVal(executeMove(m,n,movem,moven,board));
 
     return ++index;
 }

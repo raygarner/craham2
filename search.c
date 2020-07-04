@@ -22,6 +22,7 @@ findMostEpicQuietMove(Pair ab, int depth, int colour, Board board)
     }
 
     legalMoves[index] = LASTACTION;
+    sortMoves(colour, legalMoves);
 
     addEvalsQuiet(ab,depth,colour,board,legalMoves);
 
@@ -100,6 +101,7 @@ findMostEpicMove(Pair ab, int depth, int colour, Board board)
     }
 
     legalMoves[index] = LASTACTION;
+    sortMoves(colour, legalMoves);
 
     addEvals(ab,depth,colour,board,legalMoves);
 
