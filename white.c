@@ -24,7 +24,7 @@ int main(int argc, char **argv)
         printBoard(board.allPieces);
         printf("craham's move: (%d,%d) (%d,%d)\n", bestMove.m, bestMove.n, \
             bestMove.movem, bestMove.moven);
-        printf("material: %d\n", totalMaterial(board.allPieces));
+        printf("eval: %d\n", totalVal(board));
 
         board = movePrompt(board);
 

@@ -130,6 +130,7 @@ int evalBishop(int index);
 int evalRook(int index);
 int evalPawn(int index);
 int evalKing(int index);
+int evalQueen(int index);
 
 /* search.c */
 Action findMostEpicQuietMove(Pair ab, int depth, int colour, Board board);

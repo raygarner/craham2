@@ -49,10 +49,10 @@ evalAllPieces(Piece allPieces[8][8])
 
     for (m = 0; m < SIDE; m++) {
         for (n = 0; n < SIDE; n++) {
-            if (allPieces[m][n].colour) {
+            if (allPieces[m][n].colour == WHITE) {
                 total += evalPiece(m, n, allPieces);
                 count++;
-            } else {
+            } else if (allPieces[m][n].colour == BLACK){
                 total -= evalPiece(m, n, allPieces);
                 count++;
             }
@@ -86,6 +86,9 @@ evalPiece(int m, int n, Piece allPieces[8][8])
 
     case KING :
         return evalKing(calcIndex(allPieces[m][n].colour, m, n));
+     
+    case QUEEN :
+        return evalQueen(calcIndex(allPieces[m][n].colour, m, n));
 
     default :
         return 0;
@@ -93,7 +96,7 @@ evalPiece(int m, int n, Piece allPieces[8][8])
 
 }
 
-/* returns the positional eval for a knight */
+/* returns the positional eval for a knight */ 
 int
 evalKnight(int index)
 {
@@ -168,6 +171,22 @@ evalKing(int index)
                                   0, 0, 0, 0, 0, 0, 0, 0,
                                   0, 0, 0,-20,-20,-20,0,0,
                                   0, 0, 0,-20,-20,-20,0,0};
+
+    return squares[index];
+}
+
+/* returns the position eval for a queen */
+int
+evalQueen(int index)
+{
+    static const int squares[] = {-20,-10,-10, -5, -5,-10,-10,-20,
+                                -10,  0,  0,  0,  0,  0,  0,-10,
+                                -10,  0,  0,  0,  0,  0,  0,-10,
+                                 -5,  0,  0,  0,  0,  0,  0, -5,
+                                  0,  0,  0,-10,-10,  0,  0, -5,
+                                -10,  0,  0,-10,-10,  0,  0,-10,
+                                -10,  0,  0,  0,  0,  0,  0,-10,
+                                -20,-10,-10, -5, -5,-10,-10,-20};
 
     return squares[index];
 }

@@ -21,6 +21,8 @@ int main(int argc, char **argv)
     bestMove.moven = 0;
 
     while (1) {
+        printBoard(board.allPieces);
+
         start = clock();
         bestMove = findMostEpicMove(ab, DEPTH, WHITE, board);
         end = clock();
@@ -36,7 +38,6 @@ int main(int argc, char **argv)
 
         board = movePrompt(board);
 
-        printBoard(board.allPieces);
     }
 
     return 0;
