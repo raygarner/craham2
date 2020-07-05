@@ -270,11 +270,9 @@ validPawnMove(int m, int n, int movem, int moven, Piece allPieces[8][8])
 int
 validEnPassant(int m, int n, int movem, int moven, Piece allPieces[8][8])
 {
-    if (allPieces[m+movem][n+moven].typeVal != EMPTY || \
-    !isPawnCapture(allPieces[m][n].colour, movem, moven))
-        return 0;
-
-    return allPieces[m][n+moven].typeVal == PAWN && \
+    return allPieces[m+movem][n+moven].typeVal == EMPTY && \
+        isPawnCapture(allPieces[m][n].colour, movem, moven) && \
+        allPieces[m][n+moven].typeVal == PAWN && \
         allPieces[m][n+moven].mc == 2;
 }
 
