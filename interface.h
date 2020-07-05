@@ -10,8 +10,8 @@
 #define SIDE 8
 #define MOVES 256
 #define CAPTURED -1
-#define DEPTH 6
-#define QDEPTH -6
+#define DEPTH 4
+#define QDEPTH -4
 
 #define LAST_ACTION { .m = 0 , .n = 0, .movem = 0, .moven = 0, \
     .eval = 0 }
@@ -179,17 +179,5 @@ int kingMoveLegality(int m, int n, int movem, int moven, Board board, \
 int legalKingCaps(int m, int n, Board board, Action *legalMoves, int index);
 int kingCapLegality(int m, int n, int movem, int moven, Board board, \
     Action *legalMoves, int index);
-
-
-/* hashing.c */
-int initTransTable();
-int positionMatch(int colour, int depth, Board board, int index);
-int compareAllPieces(Piece a[8][8], Piece b[8][8]);
-int comparePieces(Piece a, Piece b);
-int addPosToTable(int index, int colour, int depth, Board board, \
-    Action action);
-int genHashCode(Piece allPieces[8][8]);
-int typeValIndex(int typeVal);
-int initHashBoard();
 
 #endif
