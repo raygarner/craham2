@@ -1,2 +1,6 @@
+fix en passant recap bug
+make movegen not execute move twice for check checking and evaluation
+improve bitboards
 opening book
 transposition table
+improve ui
