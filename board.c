@@ -93,11 +93,7 @@ executeMove(int m, int n, int movem, int moven, Board board)
     }
 
     if (board.allPieces[m][n].typeVal == PAWN) {
-        if (movem == 2 * DIRECTION(colour)) {
-            board.allPieces[m][n].mc += 2;
-        } else {
-            board.allPieces[m][n].mc++;
-        }
+        board.allPieces[m][n].mc += abs(movem);
 
         if (m + movem == HOMEROW(!colour)) {
             board.allPieces[m][n].typeVal = QUEEN;
@@ -222,7 +218,6 @@ executeCastle(int m, int moven, Board board)
 int
 captureEnPassant(int m, int n, int movem, int moven, Piece allPieces[8][8])
 {
-    allPieces[m][n].mc++;
 
     allPieces[m+movem][n+moven] = allPieces[m][n];
 
