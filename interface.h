@@ -130,6 +130,7 @@ int evalBishop(int index);
 int evalRook(int index);
 int evalPawn(int index);
 int evalKing(int index);
+int kingSafety(int m, int n, Piece allPieces[8][8]);
 int evalQueen(int index);
 
 /* search.c */

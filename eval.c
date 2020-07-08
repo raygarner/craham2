@@ -85,7 +85,8 @@ evalPiece(int m, int n, Piece allPieces[8][8])
         return evalRook(calcIndex(allPieces[m][n].colour, m, n));
 
     case KING :
-        return evalKing(calcIndex(allPieces[m][n].colour, m, n));
+        return evalKing(calcIndex(allPieces[m][n].colour, m, n)) + \
+            kingSafety(m, n, allPieces);
      
     case QUEEN :
         return evalQueen(calcIndex(allPieces[m][n].colour, m, n));
@@ -105,7 +106,7 @@ evalKnight(int index)
                                 -30,  0, 10, 15, 15, 10,  0,-30,
                                 -30,  5, 15, 10, 10, 15,  5,-30,
                                 -30,  0, 15, 20, 20, 15,  0,-30,
-                                -30,  5, 10, 15, 15, 10,  5,-30,
+                                -30,  5, 10, 15, 15, 12,  5,-30,
                                 -40,-20,  0,  5,  5,  0,-20,-40,
                                 -50,-40,-30,-30,-30,-30,-40,-50};
 
@@ -151,8 +152,8 @@ evalPawn(int index)
                                 50, 50, 50, 50, 50, 50, 50, 50,
                                 10, 10, 20, 30, 30, 20, 10, 10,
                                  5,  5, 10, 20, 20, 10,  5,  5,
-                                 0,  0,  0, 20, 20,-25,-20,  0,
-                                 5, -5,-10,  0,  0,-10, -5,  5,
+                                 0,  0,  0, 20, 20,  0,  0,  0,
+                                 0,  0,  0,  0,  0,  0,  0,  0,
                                  5, 10, 10,-20,-20, 10, 10,  5,
                                  0,  0,  0,  0,  0,  0,  0,  0};
 
@@ -170,9 +171,27 @@ evalKing(int index)
                                   0, 0, 0, 0, 0, 0, 0, 0,
                                   0, 0, 0, 0, 0, 0, 0, 0,
                                   0, 0, 0,-20,-20,-20,0,0,
-                                  0, 0, 0,-20,-20,-20,0,0};
+                                  0, 0,-10,-20,-20,-20,0,0};
 
     return squares[index];
+}
+
+/* returns the integrity of the pawns protecting the king */
+int
+kingSafety(int m, int n, Piece allPieces[8][8])
+{
+    int total = 0, dir = DIRECTION(allPieces[m][n].colour), i;
+
+    for (i = -1; i < 2; i++) {
+        if (n+i <= 2 || n+i >= 5) {
+            if (allPieces[m+dir][n+i].typeVal == PAWN && \
+            allPieces[m][n].colour == allPieces[m+dir][n+i].colour) {
+                total += 20;
+            }
+        }
+    }
+
+    return total;
 }
 
 /* returns the position eval for a queen */
