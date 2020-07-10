@@ -1,4 +1,6 @@
-add king safety element to eval
+add in check extensions
+test kingsafety eval
+add endgame eval
 replace valid move in isThreatened with validCapture
 make movegen not execute move twice for check checking and evaluation
 improve bitboards
